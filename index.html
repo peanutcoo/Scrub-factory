@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🧶 2026 따뜻한 미니 수세미 공장</title>
+  <style>
+    :root {
+      --bg-color: #fdf8f2;
+      --card-bg: #ffffff;
+      --primary: #ff6b6b;
+      --secondary: #4ecdc4;
+      --text: #2d3436;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      margin: 0; padding: 16px;
+      max-width: 500px; margin: 0 auto;
+    }
+    h1 { text-align: center; font-size: 1.4rem; margin-bottom: 20px; }
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .progress-bar-bg {
+      background: #eee;
+      border-radius: 10px;
+      height: 20px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .progress-bar-fill {
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
+      height: 100%;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: #e0e0e0;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    label { font-size: 0.9rem; font-weight: bold; display: block; margin-bottom: 6px; }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--secondary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .list-item {
+      border-bottom: 1px solid #f0f0f0;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .badge {
+      background: #f1f2f6;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧶 따뜻한 수세미 공장 🏭</h1>
+
+  <!-- 탭 버튼 -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('dash')">🏭 대시보드</button>
+    <button class="tab-btn" onclick="switchTab('form')">📝 실적 등록</button>
+  </div>
+
+  <!-- 화면 1: 대시보드 -->
+  <div id="page-dash">
+    <div class="card">
+      <h3>🎯 전체 목표 달성률</h3>
+      <div style="display: flex; justify-content: space-between;">
+        <span>목표: <strong id="target-count">500</strong>개</span>
+        <span>현재: <strong id="total-count" style="color: var(--primary)">0</strong>개</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+      <div style="text-align: right; font-size: 0.85rem; color: #666;" id="progress-percent">0% 달성 중!</div>
+    </div>
+
+    <div class="card">
+      <h3>👑 회원별 총 생산량</h3>
+      <div id="user-summary">로딩 중...</div>
+    </div>
+
+    <div class="card">
+      <h3>💬 최근 등록 한줄 메시지</h3>
+      <div id="recent-messages">로딩 중...</div>
+    </div>
+  </div>
+
+  <!-- 화면 2: 입력 폼 -->
+  <div id="page-form" style="display: none;">
+    <div class="card">
+      <h3>📝 오늘 뜬 수세미 등록</h3>
+      <form id="scrub-form">
+        <div class="form-group">
+          <label>작업원 이름</label>
+          <input type="text" id="name" placeholder="예: 김뜨개" required>
+        </div>
+        <div class="form-group">
+          <label>작품 / 역할 종류</label>
+          <select id="item">
+            <option value="🍞 식빵 수세미">🍞 식빵 수세미</option>
+            <option value="🌸 꽃 수세미">🌸 꽃 수세미</option>
+            <option value="🍓 딸기 수세미">🍓 딸기 수세미</option>
+            <option value="🌀 바탕/고리 작업">🌀 바탕/고리 작업</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>오늘 완성한 개수</label>
+          <input type="number" id="count" min="1" value="1" required>
+        </div>
+        <div class="form-group">
+          <label>한줄 응원 / 소감 메시지</label>
+          <input type="text" id="message" placeholder="예: 오늘 5개 폭풍 생산 완료!">
+        </div>
+        <button type="submit" class="submit-btn">🚀 공장에 제출하기</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ⚠️ 여sans기 본인의 구글 Apps Script URL을 넣으세요!
+    const API_URL = "https://script.google.com/macros/s/AKfycbw5rvdKsgZa8dfQp54Se01TH2hEjnwhwuEBLGbBH7FUzYZ9YqZ3S2hcXM2l7BYhKmBx/exec";
+    const TARGET_GOAL = 500; // 전체 목표 수량
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      if (tab === 'dash') {
+        document.getElementById('page-dash').style.display = 'block';
+        document.getElementById('page-form').style.display = 'none';
+        event.target.classList.add('active');
+        loadData();
+      } else {
+        document.getElementById('page-dash').style.display = 'none';
+        document.getElementById('page-form').style.display = 'block';
+        event.target.classList.add('active');
+      }
+    }
+
+    async function loadData() {
+      try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+        
+        let total = 0;
+        const userTotals = {};
+        
+        data.forEach(row => {
+          const cnt = Number(row.count) || 0;
+          total += cnt;
+          userTotals[row.name] = (userTotals[row.name] || 0) + cnt;
+        });
+
+        // 1. 달성률 업데이트
+        document.getElementById('total-count').innerText = total;
+        const percent = Math.min(Math.round((total / TARGET_GOAL) * 100), 100);
+        document.getElementById('progress-fill').style.width = percent + '%';
+        document.getElementById('progress-percent').innerText = `${percent}% 달성 중!`;
+
+        // 2. 회원별 합계 업데이트
+        const userSummaryEl = document.getElementById('user-summary');
+        userSummaryEl.innerHTML = Object.entries(userTotals)
+          .sort((a,b) => b[1] - a[1])
+          .map(([name, count]) => `
+            <div class="list-item">
+              <span><strong>${name}</strong> 님</span>
+              <span class="badge">${count}개</span>
+            </div>
+          `).join('') || '아직 등록된 실적이 없습니다.';
+
+        // 3. 최근 메시지
+        const recentEl = document.getElementById('recent-messages');
+        recentEl.innerHTML = data.slice(-5).reverse().map(row => `
+          <div class="list-item" style="flex-direction:column; align-items:flex-start;">
+            <div><strong>${row.name}</strong> (${row.item} +${row.count}개)</div>
+            <div style="font-size:0.85rem; color:#666; margin-top:2px;">"${row.message || '응원합니다!'}"</div>
+          </div>
+        `).join('') || '등록된 메시지가 없습니다.';
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    document.getElementById('scrub-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = e.target.querySelector('button');
+      submitBtn.innerText = "제출 중...";
+      submitBtn.disabled = true;
+
+      const payload = {
+        name: document.getElementById('name').value,
+        item: document.getElementById('item').value,
+        count: document.getElementById('count').value,
+        message: document.getElementById('message').value
+      };
+
+      try {
+        await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        alert('🎉 성공적으로 등록되었습니다!');
+        document.getElementById('scrub-form').reset();
+        switchTab('dash');
+      } catch (err) {
+        alert('오류가 발생했습니다. 다시 시도해주세요.');
+      } finally {
+        submitBtn.innerText = "🚀 공장에 제출하기";
+        submitBtn.disabled = false;
+      }
+    });
+
+    // 초기에 데이터 로드
+    loadData();
+  </script>
+</body>
+</html>
