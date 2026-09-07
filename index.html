@@ -8,28 +8,44 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
-  <!-- 동글동글하고 또렷한 귀여운 무료 폰트 (카페24 동동 & Press Start 2P) -->
+  <!-- 에스코어 드림 폰트 & Press Start 2P -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
   <style>
-    /* 카페24 동동 폰트 정의 (가독성 우수 + 동글동글 귀여운 스타일) */
+    /* 에스코어 드림(S-Core Dream) 폰트 정의 */
     @font-face {
-      font-family: 'Cafe24Dongdong';
-      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Cafe24Dongdong.woff2') format('woff2');
+      font-family: 'S-CoreDream-3Light';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
       font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'S-CoreDream-5Medium';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff') format('woff');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'S-CoreDream-6Bold';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff') format('woff');
+      font-weight: bold;
       font-style: normal;
     }
 
     body {
-      font-family: 'Cafe24Dongdong', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'S-CoreDream-5Medium', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: #fefce8; /* 따뜻한 연노랑 배경 */
       color: #334155;
       -webkit-tap-highlight-color: transparent;
-      font-size: 1.15rem; /* 카페24 동동 폰트에 최적화된 글자 크기 */
-      line-height: 1.4;
+      font-size: 0.95rem;
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, .font-bold {
+      font-family: 'S-CoreDream-6Bold', sans-serif;
     }
 
     .pixel-font { font-family: 'Press Start 2P', cursive; }
@@ -97,7 +113,7 @@
   <!-- Header & Factory Animation -->
   <header class="text-center mb-5">
     <div class="pixel-font text-factory-blue text-xs mb-2">★ MINI KNITTING FACTORY ★</div>
-    <h1 class="text-3xl font-bold text-factory-dark flex items-center justify-center gap-2">
+    <h1 class="text-2xl font-bold text-factory-dark flex items-center justify-center gap-2">
       <i class="fas fa-industry text-factory-blue"></i>
       두코두코 수세미 공장
     </h1>
@@ -120,12 +136,12 @@
   <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-yellow-100 shadow-lg z-50 max-w-md mx-auto rounded-t-3xl">
     <div class="flex justify-around p-3">
       <button onclick="switchTab('dash')" id="tab-dash-btn" class="flex flex-col items-center gap-1 p-2 px-6 rounded-2xl bg-factory-blue text-white active:scale-95 transition-all shadow-sm">
-        <i class="fas fa-chart-line text-lg"></i>
-        <span class="text-base font-bold">작업현황</span>
+        <i class="fas fa-chart-line text-base"></i>
+        <span class="text-sm font-bold">작업현황</span>
       </button>
       <button onclick="switchTab('form')" id="tab-form-btn" class="flex flex-col items-center gap-1 p-2 px-6 rounded-2xl bg-yellow-50 text-amber-800 active:scale-95 transition-all">
-        <i class="fas fa-edit text-lg"></i>
-        <span class="text-base font-bold">생산물 등록</span>
+        <i class="fas fa-edit text-base"></i>
+        <span class="text-sm font-bold">생산물 등록</span>
       </button>
     </div>
   </nav>
@@ -136,24 +152,24 @@
     <!-- Overall Goal Card -->
     <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-yellow-100">
       <div class="flex justify-between items-center mb-3">
-        <h3 class="text-2xl font-bold text-slate-700 flex items-center gap-2">
+        <h3 class="text-lg font-bold text-slate-700 flex items-center gap-2">
           <i class="fas fa-bullseye text-amber-400"></i>
           전체 목표 달성률
         </h3>
         <span class="pixel-font text-xs text-factory-deep-blue" id="progress-percent">0%</span>
       </div>
       <div class="flex justify-between items-end mb-2.5">
-        <div class="text-lg text-slate-600">현재 <strong id="total-count" class="text-3xl font-extrabold text-factory-deep-blue">0</strong> 개 완료!</div>
-        <div class="text-base text-slate-400">목표: <span id="target-count">100</span>개</div>
+        <div class="text-sm text-slate-600">현재 <strong id="total-count" class="text-2xl font-extrabold text-factory-deep-blue">0</strong> 개 완료!</div>
+        <div class="text-xs text-slate-400">목표: <span id="target-count">100</span>개</div>
       </div>
-      <div class="w-full h-5 bg-amber-50 rounded-full overflow-hidden border border-yellow-100 p-0.5">
+      <div class="w-full h-4 bg-amber-50 rounded-full overflow-hidden border border-yellow-100 p-0.5">
         <div id="progress-fill" class="h-full bg-gradient-to-r from-yellow-300 to-factory-blue rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
       </div>
     </div>
 
     <!-- Category Summary Card -->
     <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-yellow-100">
-      <h3 class="text-2xl font-bold text-slate-700 mb-4 flex items-center gap-2">
+      <h3 class="text-lg font-bold text-slate-700 mb-4 flex items-center gap-2">
         <i class="fas fa-boxes-stacked text-factory-blue"></i>
         작품별 생산 현황
       </h3>
@@ -164,7 +180,7 @@
 
     <!-- Group Workers Section -->
     <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-yellow-100 space-y-5">
-      <h3 class="text-2xl font-bold text-slate-700 flex items-center gap-2">
+      <h3 class="text-lg font-bold text-slate-700 flex items-center gap-2">
         <i class="fas fa-users text-amber-400"></i>
         조별 작업자 현황
       </h3>
@@ -178,19 +194,19 @@
   <!-- Page 2: 생산물 등록 (Form) -->
   <main id="page-form" class="space-y-5" style="display: none;">
     <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-yellow-100">
-      <h3 class="text-2xl font-bold text-slate-700 mb-6 flex items-center gap-2">
+      <h3 class="text-lg font-bold text-slate-700 mb-6 flex items-center gap-2">
         <i class="fas fa-pencil-alt text-factory-blue"></i>
         오늘의 생산량 등록하기
       </h3>
       <form id="scrub-form" class="space-y-5">
         <div class="space-y-1.5">
-          <label class="text-lg font-bold text-slate-700">작업원 이름 (닉네임)</label>
+          <label class="text-sm font-bold text-slate-700">작업원 이름 (닉네임)</label>
           <input type="text" id="name" placeholder="예: 김뜨개" required
-                 class="w-full p-3 bg-amber-50/50 border-2 border-yellow-100 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-slate-800 text-lg">
+                 class="w-full p-3 bg-amber-50/50 border-2 border-yellow-100 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-slate-800 text-sm">
         </div>
         <div class="space-y-1.5">
-          <label class="text-lg font-bold text-slate-700">오늘 뜬 작품</label>
-          <select id="item" class="w-full p-3 bg-amber-50/50 border-2 border-yellow-100 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none appearance-none text-lg text-slate-800">
+          <label class="text-sm font-bold text-slate-700">오늘 뜬 작품</label>
+          <select id="item" class="w-full p-3 bg-amber-50/50 border-2 border-yellow-100 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none appearance-none text-sm text-slate-800">
             <option value="🪨 조약돌">🪨 조약돌</option>
             <option value="☁️ 구름">☁️ 구름</option>
             <option value="🐤 오리">🐤 오리</option>
@@ -200,11 +216,11 @@
           </select>
         </div>
         <div class="space-y-1.5">
-          <label class="text-lg font-bold text-slate-700">완성한 개수</label>
+          <label class="text-sm font-bold text-slate-700">완성한 개수</label>
           <input type="number" id="count" min="1" value="1" required
-                 class="w-full p-3 bg-amber-50/50 border-2 border-yellow-100 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-xl font-bold text-slate-800">
+                 class="w-full p-3 bg-amber-50/50 border-2 border-yellow-100 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-lg font-bold text-slate-800">
         </div>
-        <button type="submit" class="w-full p-4 bg-factory-blue hover:bg-factory-deep-blue text-white rounded-2xl text-xl font-bold active:scale-95 transition-all shadow-md flex items-center justify-center gap-2">
+        <button type="submit" class="w-full p-4 bg-factory-blue hover:bg-factory-deep-blue text-white rounded-2xl text-base font-bold active:scale-95 transition-all shadow-md flex items-center justify-center gap-2">
           <i class="fas fa-paper-plane"></i>
           <span>공장에 보고하기</span>
         </button>
@@ -272,8 +288,8 @@
         const catSummaryEl = document.getElementById('category-summary');
         catSummaryEl.innerHTML = CATEGORIES.map(cat => `
           <div class="bg-amber-50/60 p-2.5 rounded-2xl border border-yellow-100">
-            <div class="text-sm text-slate-600 font-bold mb-0.5">${cat.name}</div>
-            <div class="text-xl font-extrabold text-factory-deep-blue">${catTotals[cat.name] || 0}개</div>
+            <div class="text-xs text-slate-600 font-bold mb-0.5">${cat.name}</div>
+            <div class="text-base font-extrabold text-factory-deep-blue">${catTotals[cat.name] || 0}개</div>
           </div>
         `).join('');
 
@@ -286,8 +302,8 @@
           return `
             <div class="border-b border-yellow-100 pb-4 last:border-0">
               <div class="flex justify-between items-center mb-2">
-                <span class="font-bold text-slate-700 text-xl">${cat.groupName}</span>
-                <span class="text-sm px-3 py-0.5 bg-amber-100 text-amber-800 rounded-full font-bold">
+                <span class="font-bold text-slate-700 text-base">${cat.groupName}</span>
+                <span class="text-xs px-2.5 py-0.5 bg-amber-100 text-amber-800 rounded-full font-bold">
                   총 ${catTotals[cat.name]}개
                 </span>
               </div>
@@ -297,16 +313,16 @@
                   ? workerEntries.map(([userName, count], idx) => `
                     <div class="knitting-worker" style="animation-delay: ${idx * 0.2}s;">
                       <!-- 머리 위 누적 개수 배지 -->
-                      <span class="bg-factory-blue text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm mb-1">
+                      <span class="bg-factory-blue text-white text-[11px] font-bold px-2 py-0.5 rounded-full shadow-sm mb-1">
                         +${count}개
                       </span>
                       <!-- 랜덤 뜨개질 이모티콘 -->
                       <span class="text-3xl">${getHashAvatar(userName)}</span>
                       <!-- 작업원 이름 -->
-                      <span class="text-sm font-bold text-slate-600 mt-1">${userName}</span>
+                      <span class="text-xs font-bold text-slate-600 mt-1">${userName}</span>
                     </div>
                   `).join('')
-                  : '<span class="text-sm text-slate-400">아직 참여한 작업원이 없습니다 🐣</span>'
+                  : '<span class="text-xs text-slate-400">아직 참여한 작업원이 없습니다 🐣</span>'
                 }
               </div>
             </div>
