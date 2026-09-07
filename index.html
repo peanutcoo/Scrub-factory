@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>🧶 2026 따뜻한 미니 수세미 공장 🏭</title>
+  <title>🧶 두코두코 수세미 공장 🏭</title>
   <!-- Tailwind CSS & FontAwesome Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <!-- Retro Pixel Font -->
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
@@ -49,43 +49,51 @@
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-    .yarn-ball {
-      position: absolute; bottom: 10px; left: -50px; font-size: 2rem;
-      animation: yarn-move 6s linear infinite;
+    .item-conveyor {
+      position: absolute; bottom: 15px; left: -60px; font-size: 2rem;
+      animation: conveyor-move 8s linear infinite;
     }
-    @keyframes yarn-move {
-      0% { left: -50px; transform: scale(1) rotate(0deg); }
-      50% { transform: scale(1.1) rotate(180deg); }
-      100% { left: 110%; transform: scale(1) rotate(360deg); }
+    @keyframes conveyor-move {
+      0% { left: -60px; transform: rotate(0deg); }
+      100% { left: 110%; transform: rotate(360deg); }
     }
-    .scrubber-pop {
-      position: absolute; bottom: 20px; right: 20px; font-size: 2.5rem;
-      animation: scrubber-pop 2s ease-out infinite;
+
+    /* Knitting Worker Animation */
+    .knitting-worker {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      animation: knit-bounce 1.5s ease-in-out infinite alternate;
     }
-    @keyframes scrubber-pop {
-      0% { transform: scale(0); opacity: 0; }
-      50% { transform: scale(1.2) translateY(-10px); opacity: 1; }
-      100% { transform: scale(1) translateY(0); opacity: 0; }
+    @keyframes knit-bounce {
+      0% { transform: translateY(0) rotate(-3deg); }
+      100% { transform: translateY(-6px) rotate(3deg); }
     }
   </style>
 </head>
-<body class="max-w-md mx-auto p-4 pb-20">
+<body class="max-w-md mx-auto p-4 pb-24">
 
   <!-- Header & Factory Animation -->
   <header class="text-center mb-6">
     <div class="pixel-font text-factory-pink text-xs mb-2">MINI KNITTING FACTORY</div>
     <h1 class="text-2xl font-bold text-factory-dark flex items-center justify-center gap-2">
       <i class="fas fa-industry text-factory-cyan"></i>
-      따뜻한 수세미 공장
+      두코두코 수세미 공장
     </h1>
   </header>
 
   <div class="factory-window">
     <i class="fas fa-cog gear text-4xl" style="top: 20px; left: 30px;"></i>
     <i class="fas fa-cog gear text-2xl" style="top: 60px; left: 70px; animation-duration: 2s; animation-direction: reverse;"></i>
-    <span class="yarn-ball">🧶</span>
-    <span class="scrubber-pop text-4xl">🌸</span>
-    <span class="scrubber-pop text-4xl" style="animation-delay: 1s;">🍞</span>
+    
+    <!-- Moving Items (6 categories) -->
+    <span class="item-conveyor" style="animation-delay: 0s;">🪨</span>
+    <span class="item-conveyor" style="animation-delay: 1.3s;">☁️</span>
+    <span class="item-conveyor" style="animation-delay: 2.6s;">🐤</span>
+    <span class="item-conveyor" style="animation-delay: 3.9s;">🍞</span>
+    <span class="item-conveyor" style="animation-delay: 5.2s;">🍳</span>
+    <span class="item-conveyor" style="animation-delay: 6.5s;">🪡</span>
   </div>
 
   <!-- Bottom Navigation -->
@@ -93,16 +101,16 @@
     <div class="flex justify-around p-3">
       <button onclick="switchTab('dash')" id="tab-dash-btn" class="flex flex-col items-center gap-1.5 p-2 px-6 rounded-xl bg-factory-cyan text-white active:scale-95 transition-all">
         <i class="fas fa-chart-line text-lg"></i>
-        <span class="text-xs font-bold">공장 대시보드</span>
+        <span class="text-xs font-bold">작업현황</span>
       </button>
       <button onclick="switchTab('form')" id="tab-form-btn" class="flex flex-col items-center gap-1.5 p-2 px-6 rounded-xl bg-gray-100 text-gray-500 active:scale-95 transition-all">
         <i class="fas fa-edit text-lg"></i>
-        <span class="text-xs font-bold">나의 실적 등록</span>
+        <span class="text-xs font-bold">생산물 등록</span>
       </button>
     </div>
   </nav>
 
-  <!-- Page 1: Dashboard -->
+  <!-- Page 1: 작업현황 (Dashboard) -->
   <main id="page-dash" class="space-y-6">
     
     <!-- Overall Goal Card -->
@@ -116,31 +124,38 @@
       </div>
       <div class="flex justify-between items-end mb-2.5">
         <div class="text-sm text-gray-500">현재 <strong id="total-count" class="text-3xl font-extrabold text-factory-dark">0</strong> 개 생산 완료!</div>
-        <div class="text-xs text-gray-400">목표: <span id="target-count">500</span>개</div>
+        <div class="text-xs text-gray-400">목표: <span id="target-count">100</span>개</div>
       </div>
       <div class="w-full h-4 bg-gray-100 rounded-full overflow-hidden">
         <div id="progress-fill" class="h-full bg-gradient-to-r from-factory-cyan to-factory-pink rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
       </div>
     </div>
 
-    <!-- User Summary Card -->
+    <!-- Category Summary Card -->
     <div class="bg-white p-6 rounded-3xl shadow-lg border border-gray-50">
-      <h3 class="text-lg font-bold text-gray-800 mb-5 flex items-center gap-2">
-        <i class="fas fa-crown text-amber-400"></i>
-        베스트 작업원 RANKING
+      <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+        <i class="fas fa-boxes-stacked text-factory-cyan"></i>
+        작품별 생산 현황
       </h3>
-      <div id="user-summary" class="space-y-3">
-        <!-- 로딩 중 아이콘 -->
-        <div class="text-center py-6 text-gray-400">
-          <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
-          <div>공장 데이터 로딩 중...</div>
-        </div>
+      <div id="category-summary" class="grid grid-cols-3 gap-3 text-center">
+        <!-- JS로 동적 생성 -->
+      </div>
+    </div>
+
+    <!-- Group Workers Section -->
+    <div class="bg-white p-6 rounded-3xl shadow-lg border border-gray-50 space-y-6">
+      <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+        <i class="fas fa-users text-amber-400"></i>
+        조별 작업자 현황
+      </h3>
+      <div id="group-workers" class="space-y-6">
+        <!-- JS로 각 조별 이모티콘 및 라인 생성 -->
       </div>
     </div>
 
   </main>
 
-  <!-- Page 2: Form -->
+  <!-- Page 2: 생산물 등록 (Form) -->
   <main id="page-form" class="space-y-6" style="display: none;">
     <div class="bg-white p-6 rounded-3xl shadow-lg border border-gray-50">
       <h3 class="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
@@ -150,16 +165,18 @@
       <form id="scrub-form" class="space-y-5">
         <div class="space-y-2">
           <label class="text-sm font-bold text-gray-700">작업원 이름 (닉네임)</label>
-          <input type="text" id="name" placeholder="예: 뜨개 마스터" required
+          <input type="text" id="name" placeholder="예: 김뜨개" required
                  class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-factory-cyan focus:outline-none">
         </div>
         <div class="space-y-2">
           <label class="text-sm font-bold text-gray-700">오늘 뜬 작품</label>
           <select id="item" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-factory-cyan focus:outline-none appearance-none text-base">
-            <option value="🌸 꽃 수세미">🌸 꽃 수세미</option>
-            <option value="🍞 식빵 수세미">🍞 식빵 수세미</option>
-            <option value="🍓 딸기 수세미">🍓 딸기 수세미</option>
-            <option value="🌀 바탕/고리 작업">🌀 바탕/고리 작업</option>
+            <option value="🪨 조약돌">🪨 조약돌</option>
+            <option value="☁️ 구름">☁️ 구름</option>
+            <option value="🐤 오리">🐤 오리</option>
+            <option value="🍞 식빵">🍞 식빵</option>
+            <option value="🍳 계란후라이">🍳 계란후라이</option>
+            <option value="🪡 (번외)제봉">🪡 (번외)제봉</option>
           </select>
         </div>
         <div class="space-y-2">
@@ -168,7 +185,7 @@
                  class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-factory-cyan focus:outline-none text-lg font-bold">
         </div>
         <button type="submit" class="w-full p-4 bg-factory-pink text-white rounded-2xl text-base font-bold active:scale-95 transition-all shadow-md">
-          <i class="fas fa-paper-plane mr-1">
+          <i class="fas fa-paper-plane mr-1"></i>
           공장에 제출하기
         </button>
       </form>
@@ -178,7 +195,25 @@
   <script>
     // ⚠️⚠️⚠️ 여기에 본인의 구글 Apps Script URL을 넣으세요! ⚠️⚠️⚠️
     const API_URL = "https://script.google.com/macros/s/AKfycbw5rvdKsgZa8dfQp54Se01TH2hEjnwhwuEBLGbBH7FUzYZ9YqZ3S2hcXM2l7BYhKmBx/exec";
-    const TARGET_GOAL = 500; // 전체 목표 수량
+    const TARGET_GOAL = 100; // 전체 목표 수량 100개 설정
+
+    const CATEGORIES = [
+      { name: '🪨 조약돌', groupName: '조약돌 조' },
+      { name: '☁️ 구름', groupName: '구름 조' },
+      { name: '🐤 오리', groupName: '오리 조' },
+      { name: '🍞 식빵', groupName: '식빵 조' },
+      { name: '🍳 계란후라이', groupName: '계란후라이 조' },
+      { name: '🪡 (번외)제봉', groupName: '제봉 조' }
+    ];
+
+    // 작업원 이모티콘 랜덤 풀 (뜨개질하는 캐릭터 연출)
+    const AVATARS = ['🧶🐱', '🧶🐶', '🧶🐰', '🧶🐻', '🧶🦊', '🧶🐼', '🧶🐨', '🧶🐯', '🧶🐥'];
+
+    function getHashAvatar(name) {
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) hash += name.charCodeAt(i);
+      return AVATARS[hash % AVATARS.length];
+    }
 
     async function loadData() {
       try {
@@ -186,36 +221,78 @@
         const data = await res.json();
         
         let total = 0;
-        const userTotals = {};
+        const catTotals = {
+          '🪨 조약돌': 0, '☁️ 구름': 0, '🐤 오리': 0,
+          '🍞 식빵': 0, '🍳 계란후라이': 0, '🪡 (번외)제봉': 0
+        };
+        const groupUserData = {
+          '🪨 조약돌': {}, '☁️ 구름': {}, '🐤 오리': {},
+          '🍞 식빵': {}, '🍳 계란후라이': {}, '🪡 (번외)제봉': {}
+        };
         
         data.forEach(row => {
           const cnt = Number(row.count) || 0;
+          const item = row.item ? row.item.trim() : '🪨 조약돌';
+          const name = row.name ? row.name.trim() : '무명 작업원';
+
           total += cnt;
-          userTotals[row.name] = (userTotals[row.name] || 0) + cnt;
+
+          if (catTotals[item] !== undefined) {
+            catTotals[item] += cnt;
+            groupUserData[item][name] = (groupUserData[item][name] || 0) + cnt;
+          }
         });
 
-        // 1. 대시보드 숫자 및 프로그레스 바
+        // 1. 대시보드 진행률
         document.getElementById('total-count').innerText = total;
         const percent = Math.min(Math.round((total / TARGET_GOAL) * 100), 100);
         document.getElementById('progress-fill').style.width = percent + '%';
         document.getElementById('progress-percent').innerText = `${percent}%`;
 
-        // 2. 회원별 합계 (랭킹 UI)
-        const userSummaryEl = document.getElementById('user-summary');
-        const sortedUsers = Object.entries(userTotals).sort((a,b) => b[1] - a[1]);
+        // 2. 카테고리별 요약 카드
+        const catSummaryEl = document.getElementById('category-summary');
+        catSummaryEl.innerHTML = CATEGORIES.map(cat => `
+          <div class="bg-gray-50 p-3 rounded-2xl border border-gray-100">
+            <div class="text-xs text-gray-500 font-bold mb-1">${cat.name}</div>
+            <div class="text-lg font-extrabold text-factory-dark">${catTotals[cat.name] || 0}개</div>
+          </div>
+        `).join('');
 
-        userSummaryEl.innerHTML = sortedUsers.map(([name, count], index) => {
-          const rankColor = index === 0 ? 'text-amber-400' : index === 1 ? 'text-gray-400' : index === 2 ? 'text-amber-700' : 'text-gray-300';
+        // 3. 조별 작업자 캐릭터 배치
+        const groupWorkersEl = document.getElementById('group-workers');
+        groupWorkersEl.innerHTML = CATEGORIES.map(cat => {
+          const workers = groupUserData[cat.name];
+          const workerEntries = Object.entries(workers);
+
           return `
-            <div class="flex justify-between items-center p-4 bg-gray-50 rounded-2xl border border-gray-100">
-              <div class="flex items-center gap-3">
-                <i class="fas fa-award text-2xl ${rankColor}"></i>
-                <span class="text-base font-bold text-gray-800">${name} 님</span>
+            <div class="border-b border-gray-100 pb-4 last:border-0">
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-bold text-gray-700">${cat.name} ${cat.groupName}</span>
+                <span class="text-xs px-2.5 py-1 bg-gray-100 text-gray-600 rounded-full font-bold">
+                  총 ${catTotals[cat.name]}개
+                </span>
               </div>
-              <span class="text-sm px-3 py-1 bg-factory-cyan text-white rounded-full font-bold">${count}개</span>
+              <div class="flex flex-wrap gap-4 min-h-[60px] p-3 bg-gray-50 rounded-2xl items-center">
+                ${
+                  workerEntries.length > 0 
+                  ? workerEntries.map(([userName, count], idx) => `
+                    <div class="knitting-worker" style="animation-delay: ${idx * 0.2}s;">
+                      <!-- 머리 위 누적 개수 배지 -->
+                      <span class="bg-factory-pink text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm mb-1">
+                        +${count}개
+                      </span>
+                      <!-- 랜덤 뜨개질 이모티콘 -->
+                      <span class="text-2xl">${getHashAvatar(userName)}</span>
+                      <!-- 작업원 이름 -->
+                      <span class="text-xs font-bold text-gray-600 mt-1">${userName}</span>
+                    </div>
+                  `).join('')
+                  : '<span class="text-xs text-gray-400">아직 참여한 작업원이 없습니다.</span>'
+                }
+              </div>
             </div>
-          `
-        }).join('') || '<div class="text-center py-6 text-gray-400">아직 등록된 실적이 없습니다.</div>';
+          `;
+        }).join('');
 
       } catch (err) {
         console.error(err);
@@ -237,7 +314,7 @@
       } else {
         dashPage.style.display = 'none';
         formPage.style.display = 'block';
-        formBtn.className = formBtn.className.replace('bg-gray-100 text-gray-500', 'bg-factory-cyan text-white');
+        formBtn.className = formBtn.className.replace('bg-gray-100 text-white', 'bg-factory-cyan text-white');
         dashBtn.className = dashBtn.className.replace('bg-factory-cyan text-white', 'bg-gray-100 text-gray-500');
       }
     }
@@ -253,18 +330,18 @@
         name: document.getElementById('name').value,
         item: document.getElementById('item').value,
         count: document.getElementById('count').value,
-        message: '응원합니다!' // 기존 메시지 생략 시 기본 메시지
+        message: '응원합니다!'
       };
 
       try {
         await fetch(API_URL, {
           method: 'POST',
-          mode: 'no-cors', // 👈 이전 단계에서 추가한 오류 해결 옵션 적용 완료
+          mode: 'no-cors',
           headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify(payload)
         });
         
-        alert('🎉 공장에 수세미가 등록되었습니다!');
+        alert('🎉 두코두코 공장에 수세미가 성공적으로 제출되었습니다!');
         document.getElementById('scrub-form').reset();
         switchTab('dash');
       } catch (err) {
