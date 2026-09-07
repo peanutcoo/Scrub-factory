@@ -14,10 +14,11 @@
       theme: {
         extend: {
           colors: {
-            'factory-bg': '#fcfaf7',
-            'factory-pink': '#ff7675',
-            'factory-cyan': '#81ecec',
-            'factory-dark': '#2d3436',
+            'factory-bg': '#f4f7fa',
+            'factory-blue': '#2563eb',
+            'factory-light-blue': '#3b82f6',
+            'factory-sky': '#0ea5e9',
+            'factory-dark': '#1e293b',
           },
           fontFamily: {
             pixel: ['"Press Start 2P"', 'cursive'],
@@ -28,21 +29,22 @@
     }
   </script>
   <style>
-    body { font-family: 'Noto Sans KR', sans-serif; background-color: #fcfaf7; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Noto Sans KR', sans-serif; background-color: #f4f7fa; -webkit-tap-highlight-color: transparent; }
     .pixel-font { font-family: 'Press Start 2P', cursive; }
     
-    /* Pixel Factory Animation Style */
+    /* Pixel Factory Animation Style - White & Blue Theme */
     .factory-window {
       height: 120px;
-      background: linear-gradient(#ffeaa7, #fab1a0);
+      background: linear-gradient(135deg, #e0f2fe, #bae6fd);
       position: relative;
       overflow: hidden;
       border-radius: 20px;
       margin-bottom: 20px;
-      box-shadow: inset 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: inset 0 4px 10px rgba(0,0,0,0.05);
+      border: 1px solid #e0f2fe;
     }
     .gear {
-      position: absolute; color: #ff7675;
+      position: absolute; color: #0ea5e9;
       animation: gear-spin 4s linear infinite;
     }
     @keyframes gear-spin {
@@ -76,9 +78,9 @@
 
   <!-- Header & Factory Animation -->
   <header class="text-center mb-6">
-    <div class="pixel-font text-factory-pink text-xs mb-2">MINI KNITTING FACTORY</div>
+    <div class="pixel-font text-factory-sky text-xs mb-2">MINI KNITTING FACTORY</div>
     <h1 class="text-2xl font-bold text-factory-dark flex items-center justify-center gap-2">
-      <i class="fas fa-industry text-factory-cyan"></i>
+      <i class="fas fa-industry text-factory-blue"></i>
       두코두코 수세미 공장
     </h1>
   </header>
@@ -97,13 +99,13 @@
   </div>
 
   <!-- Bottom Navigation -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-lg z-50 max-w-md mx-auto rounded-t-3xl">
+  <nav class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-100 shadow-lg z-50 max-w-md mx-auto rounded-t-3xl">
     <div class="flex justify-around p-3">
-      <button onclick="switchTab('dash')" id="tab-dash-btn" class="flex flex-col items-center gap-1.5 p-2 px-6 rounded-xl bg-factory-cyan text-white active:scale-95 transition-all">
+      <button onclick="switchTab('dash')" id="tab-dash-btn" class="flex flex-col items-center gap-1.5 p-2 px-6 rounded-xl bg-factory-blue text-white active:scale-95 transition-all shadow-sm">
         <i class="fas fa-chart-line text-lg"></i>
         <span class="text-xs font-bold">작업현황</span>
       </button>
-      <button onclick="switchTab('form')" id="tab-form-btn" class="flex flex-col items-center gap-1.5 p-2 px-6 rounded-xl bg-gray-100 text-gray-500 active:scale-95 transition-all">
+      <button onclick="switchTab('form')" id="tab-form-btn" class="flex flex-col items-center gap-1.5 p-2 px-6 rounded-xl bg-slate-100 text-slate-500 active:scale-95 transition-all">
         <i class="fas fa-edit text-lg"></i>
         <span class="text-xs font-bold">생산물 등록</span>
       </button>
@@ -114,27 +116,27 @@
   <main id="page-dash" class="space-y-6">
     
     <!-- Overall Goal Card -->
-    <div class="bg-white p-6 rounded-3xl shadow-lg border border-gray-50">
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
       <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
-          <i class="fas fa-bullseye text-factory-pink"></i>
+        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+          <i class="fas fa-bullseye text-factory-blue"></i>
           전체 목표 달성률
         </h3>
-        <span class="pixel-font text-xs text-factory-cyan" id="progress-percent">0%</span>
+        <span class="pixel-font text-xs text-factory-sky" id="progress-percent">0%</span>
       </div>
       <div class="flex justify-between items-end mb-2.5">
-        <div class="text-sm text-gray-500">현재 <strong id="total-count" class="text-3xl font-extrabold text-factory-dark">0</strong> 개 생산 완료!</div>
-        <div class="text-xs text-gray-400">목표: <span id="target-count">100</span>개</div>
+        <div class="text-sm text-slate-500">현재 <strong id="total-count" class="text-3xl font-extrabold text-factory-blue">0</strong> 개 생산 완료!</div>
+        <div class="text-xs text-slate-400">목표: <span id="target-count">100</span>개</div>
       </div>
-      <div class="w-full h-4 bg-gray-100 rounded-full overflow-hidden">
-        <div id="progress-fill" class="h-full bg-gradient-to-r from-factory-cyan to-factory-pink rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
+      <div class="w-full h-4 bg-slate-100 rounded-full overflow-hidden">
+        <div id="progress-fill" class="h-full bg-gradient-to-r from-factory-sky to-factory-blue rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
       </div>
     </div>
 
     <!-- Category Summary Card -->
-    <div class="bg-white p-6 rounded-3xl shadow-lg border border-gray-50">
-      <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-        <i class="fas fa-boxes-stacked text-factory-cyan"></i>
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+      <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+        <i class="fas fa-boxes-stacked text-factory-sky"></i>
         작품별 생산 현황
       </h3>
       <div id="category-summary" class="grid grid-cols-3 gap-3 text-center">
@@ -143,9 +145,9 @@
     </div>
 
     <!-- Group Workers Section -->
-    <div class="bg-white p-6 rounded-3xl shadow-lg border border-gray-50 space-y-6">
-      <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
-        <i class="fas fa-users text-amber-400"></i>
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 space-y-6">
+      <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+        <i class="fas fa-users text-factory-blue"></i>
         조별 작업자 현황
       </h3>
       <div id="group-workers" class="space-y-6">
@@ -157,20 +159,20 @@
 
   <!-- Page 2: 생산물 등록 (Form) -->
   <main id="page-form" class="space-y-6" style="display: none;">
-    <div class="bg-white p-6 rounded-3xl shadow-lg border border-gray-50">
-      <h3 class="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
-        <i class="fas fa-pencil-alt text-factory-cyan"></i>
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+      <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+        <i class="fas fa-pencil-alt text-factory-sky"></i>
         오늘의 생산량 등록하기
       </h3>
       <form id="scrub-form" class="space-y-5">
         <div class="space-y-2">
-          <label class="text-sm font-bold text-gray-700">작업원 이름 (닉네임)</label>
+          <label class="text-sm font-bold text-slate-700">작업원 이름 (닉네임)</label>
           <input type="text" id="name" placeholder="예: 김뜨개" required
-                 class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-factory-cyan focus:outline-none">
+                 class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-slate-800">
         </div>
         <div class="space-y-2">
-          <label class="text-sm font-bold text-gray-700">오늘 뜬 작품</label>
-          <select id="item" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-factory-cyan focus:outline-none appearance-none text-base">
+          <label class="text-sm font-bold text-slate-700">오늘 뜬 작품</label>
+          <select id="item" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none appearance-none text-base text-slate-800">
             <option value="🪨 조약돌">🪨 조약돌</option>
             <option value="☁️ 구름">☁️ 구름</option>
             <option value="🐤 오리">🐤 오리</option>
@@ -180,13 +182,13 @@
           </select>
         </div>
         <div class="space-y-2">
-          <label class="text-sm font-bold text-gray-700">완성한 개수</label>
+          <label class="text-sm font-bold text-slate-700">완성한 개수</label>
           <input type="number" id="count" min="1" value="1" required
-                 class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-factory-cyan focus:outline-none text-lg font-bold">
+                 class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-lg font-bold text-slate-800">
         </div>
-        <button type="submit" class="w-full p-4 bg-factory-pink text-white rounded-2xl text-base font-bold active:scale-95 transition-all shadow-md">
-          <i class="fas fa-paper-plane mr-1"></i>
-          공장에 제출하기
+        <button type="submit" class="w-full p-4 bg-factory-blue hover:bg-factory-light-blue text-white rounded-2xl text-base font-bold active:scale-95 transition-all shadow-md flex items-center justify-center gap-2">
+          <i class="fas fa-paper-plane"></i>
+          <span>공장에 보고하기</span>
         </button>
       </form>
     </div>
@@ -252,42 +254,42 @@
         // 2. 카테고리별 요약 카드
         const catSummaryEl = document.getElementById('category-summary');
         catSummaryEl.innerHTML = CATEGORIES.map(cat => `
-          <div class="bg-gray-50 p-3 rounded-2xl border border-gray-100">
-            <div class="text-xs text-gray-500 font-bold mb-1">${cat.name}</div>
-            <div class="text-lg font-extrabold text-factory-dark">${catTotals[cat.name] || 0}개</div>
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+            <div class="text-xs text-slate-500 font-bold mb-1">${cat.name}</div>
+            <div class="text-lg font-extrabold text-factory-blue">${catTotals[cat.name] || 0}개</div>
           </div>
         `).join('');
 
-        // 3. 조별 작업자 캐릭터 배치
+        // 3. 조별 작업자 캐릭터 배치 (단어 중복 제거 수정 완료)
         const groupWorkersEl = document.getElementById('group-workers');
         groupWorkersEl.innerHTML = CATEGORIES.map(cat => {
           const workers = groupUserData[cat.name];
           const workerEntries = Object.entries(workers);
 
           return `
-            <div class="border-b border-gray-100 pb-4 last:border-0">
+            <div class="border-b border-slate-100 pb-4 last:border-0">
               <div class="flex justify-between items-center mb-3">
-                <span class="font-bold text-gray-700">${cat.name} ${cat.groupName}</span>
-                <span class="text-xs px-2.5 py-1 bg-gray-100 text-gray-600 rounded-full font-bold">
+                <span class="font-bold text-slate-700">${cat.groupName}</span>
+                <span class="text-xs px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full font-bold">
                   총 ${catTotals[cat.name]}개
                 </span>
               </div>
-              <div class="flex flex-wrap gap-4 min-h-[60px] p-3 bg-gray-50 rounded-2xl items-center">
+              <div class="flex flex-wrap gap-4 min-h-[60px] p-3 bg-slate-50 rounded-2xl items-center border border-slate-100">
                 ${
                   workerEntries.length > 0 
                   ? workerEntries.map(([userName, count], idx) => `
                     <div class="knitting-worker" style="animation-delay: ${idx * 0.2}s;">
                       <!-- 머리 위 누적 개수 배지 -->
-                      <span class="bg-factory-pink text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm mb-1">
+                      <span class="bg-factory-blue text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm mb-1">
                         +${count}개
                       </span>
                       <!-- 랜덤 뜨개질 이모티콘 -->
                       <span class="text-2xl">${getHashAvatar(userName)}</span>
                       <!-- 작업원 이름 -->
-                      <span class="text-xs font-bold text-gray-600 mt-1">${userName}</span>
+                      <span class="text-xs font-bold text-slate-600 mt-1">${userName}</span>
                     </div>
                   `).join('')
-                  : '<span class="text-xs text-gray-400">아직 참여한 작업원이 없습니다.</span>'
+                  : '<span class="text-xs text-slate-400">아직 참여한 작업원이 없습니다.</span>'
                 }
               </div>
             </div>
@@ -308,21 +310,21 @@
       if (tab === 'dash') {
         dashPage.style.display = 'block';
         formPage.style.display = 'none';
-        dashBtn.className = dashBtn.className.replace('bg-gray-100 text-gray-500', 'bg-factory-cyan text-white');
-        formBtn.className = formBtn.className.replace('bg-factory-cyan text-white', 'bg-gray-100 text-gray-500');
+        dashBtn.className = dashBtn.className.replace('bg-slate-100 text-slate-500', 'bg-factory-blue text-white shadow-sm');
+        formBtn.className = formBtn.className.replace('bg-factory-blue text-white shadow-sm', 'bg-slate-100 text-slate-500');
         loadData();
       } else {
         dashPage.style.display = 'none';
         formPage.style.display = 'block';
-        formBtn.className = formBtn.className.replace('bg-gray-100 text-white', 'bg-factory-cyan text-white');
-        dashBtn.className = dashBtn.className.replace('bg-factory-cyan text-white', 'bg-gray-100 text-gray-500');
+        formBtn.className = formBtn.className.replace('bg-slate-100 text-slate-500', 'bg-factory-blue text-white shadow-sm');
+        dashBtn.className = dashBtn.className.replace('bg-factory-blue text-white shadow-sm', 'bg-slate-100 text-slate-500');
       }
     }
 
     document.getElementById('scrub-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = e.target.querySelector('button');
-      submitBtn.innerText = "공장에 제출 중...";
+      submitBtn.innerText = "공장에 보고 중...";
       submitBtn.disabled = true;
       submitBtn.classList.add('opacity-50');
 
@@ -341,13 +343,13 @@
           body: JSON.stringify(payload)
         });
         
-        alert('🎉 두코두코 공장에 수세미가 성공적으로 제출되었습니다!');
+        alert('🎉 두코두코 공장에 수세미 실적이 성공적으로 보고되었습니다!');
         document.getElementById('scrub-form').reset();
         switchTab('dash');
       } catch (err) {
         alert('오류가 발생했습니다. 다시 시도해주세요.');
       } finally {
-        submitBtn.innerText = "🚀 공장에 제출하기";
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i><span>공장에 보고하기</span>';
         submitBtn.disabled = false;
         submitBtn.classList.remove('opacity-50');
       }
