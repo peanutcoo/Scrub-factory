@@ -20,7 +20,7 @@
       background-color: #fefce8; /* 따뜻한 연노랑 배경 */
       color: #334155;
       -webkit-tap-highlight-color: transparent;
-      font-size: 0.88rem; /* 모바일에 알맞게 글자 크기 조정 */
+      font-size: 0.88rem;
       line-height: 1.4;
       -webkit-font-smoothing: antialiased;
     }
@@ -55,17 +55,29 @@
       100% { left: 110%; transform: rotate(360deg); }
     }
 
-    /* Knitting Worker Animation */
+    /* Knitting Worker Dynamic Motion (동물이 진짜 뜨개질하는 연출) */
     .knitting-worker {
       display: inline-flex;
       flex-direction: column;
       align-items: center;
       position: relative;
-      animation: knit-bounce 1.5s ease-in-out infinite alternate;
+      animation: knit-work 1.2s ease-in-out infinite alternate;
     }
-    @keyframes knit-bounce {
-      0% { transform: translateY(0) rotate(-3deg); }
-      100% { transform: translateY(-5px) rotate(3deg); }
+    @keyframes knit-work {
+      0% { transform: translateY(0) rotate(-3deg) scale(0.98); }
+      50% { transform: translateY(-3px) rotate(2deg) scale(1.02); }
+      100% { transform: translateY(-5px) rotate(-1deg) scale(1); }
+    }
+    .knitting-hands {
+      font-size: 0.7rem;
+      position: absolute;
+      bottom: 12px;
+      right: -4px;
+      animation: needle-wiggle 0.6s ease-in-out infinite alternate;
+    }
+    @keyframes needle-wiggle {
+      from { transform: rotate(-15deg) scale(0.9); }
+      to { transform: rotate(15deg) scale(1.1); }
     }
   </style>
   <script>
@@ -166,6 +178,17 @@
       </div>
     </div>
 
+    <!-- Recent Messages Section (최근 응원 한줄 메시지) -->
+    <div class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-100 space-y-3">
+      <h3 class="text-base font-extrabold text-slate-700 flex items-center gap-1.5">
+        <i class="fas fa-comment-dots text-factory-blue"></i>
+        최근 공장 소식 & 한줄 메시지
+      </h3>
+      <div id="recent-messages" class="space-y-2">
+        <div class="text-[11px] text-slate-400 text-center py-3">메시지를 불러오는 중...</div>
+      </div>
+    </div>
+
   </main>
 
   <!-- Page 2: 생산물 등록 (Form) -->
@@ -175,7 +198,7 @@
         <i class="fas fa-pencil-alt text-factory-blue"></i>
         오늘의 생산량 등록하기
       </h3>
-      <form id="scrub-form" class="space-y-4">
+      <form id="scrub-form" class="space-y-3.5">
         <div class="space-y-1">
           <label class="text-xs font-bold text-slate-700">작업원 이름 (닉네임)</label>
           <input type="text" id="name" placeholder="예: 김뜨개" required
@@ -197,7 +220,13 @@
           <input type="number" id="count" min="1" value="1" required
                  class="w-full p-3 bg-amber-50/40 border border-yellow-100 rounded-xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-base font-bold text-slate-800">
         </div>
-        <button type="submit" class="w-full p-3.5 bg-factory-blue hover:bg-factory-deep-blue text-white rounded-xl text-sm font-bold active:scale-95 transition-all shadow-md flex items-center justify-center gap-1.5">
+        <!-- 한줄 메시지 입력란 추가 -->
+        <div class="space-y-1">
+          <label class="text-xs font-bold text-slate-700">한줄 응원 / 소감 메시지 (선택)</label>
+          <input type="text" id="message" placeholder="예: 오늘 5개 폭풍 생산 완료! 🔥"
+                 class="w-full p-3 bg-amber-50/40 border border-yellow-100 rounded-xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-slate-800 text-xs">
+        </div>
+        <button type="submit" class="w-full p-3.5 bg-factory-blue hover:bg-factory-deep-blue text-white rounded-xl text-sm font-bold active:scale-95 transition-all shadow-md flex items-center justify-center gap-1.5 mt-2">
           <i class="fas fa-paper-plane"></i>
           <span>공장에 보고하기</span>
         </button>
@@ -219,12 +248,13 @@
       { name: '🪡 (번외)제봉', groupName: '제봉 조' }
     ];
 
-    const AVATARS = ['🧶🐱', '🧶🐶', '🧶🐰', '🧶🐻', '🧶🦊', '🧶🐼', '🧶🐨', '🧶🐯', '🧶🐥'];
+    // 동물 캐릭터 이모티콘 배열
+    const ANIMAL_AVATARS = ['🐱', '🐶', '🐰', '🐻', '🦊', '🐼', '🐨', '🐯', '🐥'];
 
     function getHashAvatar(name) {
       let hash = 0;
       for (let i = 0; i < name.length; i++) hash += name.charCodeAt(i);
-      return AVATARS[hash % AVATARS.length];
+      return ANIMAL_AVATARS[hash % ANIMAL_AVATARS.length];
     }
 
     async function loadData() {
@@ -270,7 +300,7 @@
           </div>
         `).join('');
 
-        // 3. 조별 작업자 캐릭터 배치
+        // 3. 조별 작업자 캐릭터 배치 (동물이 꼼지락 뜨개질하는 연출)
         const groupWorkersEl = document.getElementById('group-workers');
         groupWorkersEl.innerHTML = CATEGORIES.map(cat => {
           const workers = groupUserData[cat.name];
@@ -284,17 +314,20 @@
                   총 ${catTotals[cat.name]}개
                 </span>
               </div>
-              <div class="flex flex-wrap gap-3 min-h-[55px] p-2.5 bg-amber-50/30 rounded-xl items-center border border-yellow-100">
+              <div class="flex flex-wrap gap-4 min-h-[55px] p-2.5 bg-amber-50/30 rounded-xl items-center border border-yellow-100">
                 ${
                   workerEntries.length > 0 
                   ? workerEntries.map(([userName, count], idx) => `
-                    <div class="knitting-worker" style="animation-delay: ${idx * 0.2}s;">
+                    <div class="knitting-worker" style="animation-delay: ${idx * 0.15}s;">
                       <!-- 머리 위 누적 개수 배지 -->
                       <span class="bg-factory-blue text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full shadow-sm mb-0.5">
                         +${count}개
                       </span>
-                      <!-- 랜덤 뜨개질 이모티콘 -->
-                      <span class="text-2xl">${getHashAvatar(userName)}</span>
+                      <!-- 동물이 뜨개질 바느질을 꼼지락거리는 이모티콘 조합 -->
+                      <div class="relative flex items-center justify-center">
+                        <span class="text-2xl">${getHashAvatar(userName)}</span>
+                        <span class="knitting-hands">🧶🪡</span>
+                      </div>
                       <!-- 작업원 이름 -->
                       <span class="text-[10px] font-bold text-slate-600 mt-0.5">${userName}</span>
                     </div>
@@ -305,6 +338,21 @@
             </div>
           `;
         }).join('');
+
+        // 4. 최근 한줄 메시지 목록 (최신순 5개)
+        const recentMessagesEl = document.getElementById('recent-messages');
+        const recentData = [...data].reverse().slice(0, 5);
+        
+        recentMessagesEl.innerHTML = recentData.map(row => `
+          <div class="p-2.5 bg-amber-50/40 rounded-xl border border-yellow-100 text-xs space-y-0.5">
+            <div class="flex justify-between font-bold text-slate-700">
+              <span>${row.name || '무명 작업원'} <span class="font-normal text-slate-400">(${row.item || '작품'} +${row.count || 1}개)</span></span>
+            </div>
+            <div class="text-slate-600 font-medium">
+              "${row.message && row.message.trim() !== '' ? row.message : '오늘도 열심히 열뜨했어요! 🧶'}"
+            </div>
+          </div>
+        `).join('') || '<div class="text-[11px] text-slate-400 text-center py-2">등록된 메시지가 없습니다.</div>';
 
       } catch (err) {
         console.error(err);
@@ -342,7 +390,7 @@
         name: document.getElementById('name').value,
         item: document.getElementById('item').value,
         count: document.getElementById('count').value,
-        message: '응원합니다!'
+        message: document.getElementById('message').value || '오늘도 열심히 열뜨했어요! 🧶'
       };
 
       try {
