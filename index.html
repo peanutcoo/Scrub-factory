@@ -8,20 +8,28 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
-  <!-- 구글 정식 지원 귀여운 손글씨 폰트 (개구체 & Press Start 2P) -->
+  <!-- 동글동글하고 또렷한 귀여운 무료 폰트 (카페24 동동 & Press Start 2P) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
   <style>
+    /* 카페24 동동 폰트 정의 (가독성 우수 + 동글동글 귀여운 스타일) */
+    @font-face {
+      font-family: 'Cafe24Dongdong';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Cafe24Dongdong.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     body {
-      font-family: 'Gaegu', cursive, sans-serif;
+      font-family: 'Cafe24Dongdong', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: #fefce8; /* 따뜻한 연노랑 배경 */
       color: #334155;
       -webkit-tap-highlight-color: transparent;
-      font-size: 1.25rem; /* 개구체 특성에 맞춰 글자 크기 조정 */
-      line-height: 1.3;
-      -webkit-font-smoothing: antialiased; /* 글자 깨짐 및 자글거림 방지 */
+      font-size: 1.15rem; /* 카페24 동동 폰트에 최적화된 글자 크기 */
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
     }
 
     .pixel-font { font-family: 'Press Start 2P', cursive; }
@@ -135,7 +143,7 @@
         <span class="pixel-font text-xs text-factory-deep-blue" id="progress-percent">0%</span>
       </div>
       <div class="flex justify-between items-end mb-2.5">
-        <div class="text-lg text-slate-600">현재 <strong id="total-count" class="text-4xl font-extrabold text-factory-deep-blue">0</strong> 개 완료!</div>
+        <div class="text-lg text-slate-600">현재 <strong id="total-count" class="text-3xl font-extrabold text-factory-deep-blue">0</strong> 개 완료!</div>
         <div class="text-base text-slate-400">목표: <span id="target-count">100</span>개</div>
       </div>
       <div class="w-full h-5 bg-amber-50 rounded-full overflow-hidden border border-yellow-100 p-0.5">
@@ -149,7 +157,7 @@
         <i class="fas fa-boxes-stacked text-factory-blue"></i>
         작품별 생산 현황
       </h3>
-      <div id="category-summary" class="grid grid-cols-3 gap-2 text-center">
+      <div id="category-summary" class="grid grid-cols-3 gap-2.5 text-center">
         <!-- JS로 동적 생성 -->
       </div>
     </div>
@@ -194,7 +202,7 @@
         <div class="space-y-1.5">
           <label class="text-lg font-bold text-slate-700">완성한 개수</label>
           <input type="number" id="count" min="1" value="1" required
-                 class="w-full p-3 bg-amber-50/50 border-2 border-yellow-100 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-2xl font-bold text-slate-800">
+                 class="w-full p-3 bg-amber-50/50 border-2 border-yellow-100 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-xl font-bold text-slate-800">
         </div>
         <button type="submit" class="w-full p-4 bg-factory-blue hover:bg-factory-deep-blue text-white rounded-2xl text-xl font-bold active:scale-95 transition-all shadow-md flex items-center justify-center gap-2">
           <i class="fas fa-paper-plane"></i>
@@ -263,7 +271,7 @@
         // 2. 카테고리별 요약 카드
         const catSummaryEl = document.getElementById('category-summary');
         catSummaryEl.innerHTML = CATEGORIES.map(cat => `
-          <div class="bg-amber-50/60 p-2 rounded-2xl border border-yellow-100">
+          <div class="bg-amber-50/60 p-2.5 rounded-2xl border border-yellow-100">
             <div class="text-sm text-slate-600 font-bold mb-0.5">${cat.name}</div>
             <div class="text-xl font-extrabold text-factory-deep-blue">${catTotals[cat.name] || 0}개</div>
           </div>
