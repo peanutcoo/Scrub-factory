@@ -281,7 +281,7 @@
           }
         });
 
-        // 총 합산 계산 시 [☁️ 구름] 개수 제외 (제봉 개수로 최종 완성 판단)
+        // 총 합산 계산 시 [☁️ 구름] 개수 제외
         const effectiveTotal = catTotals['🪨 조약돌'] + 
                                catTotals['🐤 오리'] + 
                                catTotals['🍞 식빵'] + 
@@ -303,7 +303,7 @@
           </div>
         `).join('');
 
-        // 3. 조별 작업자 캐릭터 배치 (제봉 조에 "구름 쫑매는 중" 문구 반영)
+        // 3. 조별 작업자 캐릭터 배치
         const groupWorkersEl = document.getElementById('group-workers');
         groupWorkersEl.innerHTML = CATEGORIES.map(cat => {
           const workers = groupUserData[cat.name];
@@ -329,7 +329,7 @@
                       <span class="bg-factory-blue text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full shadow-sm mb-0.5">
                         +${count}개
                       </span>
-                      <!-- 동물이 뜨개질 바느질을 꼼지락거리는 이모티콘 조합 -->
+                      <!-- 이모티콘 조합 -->
                       <div class="relative flex items-center justify-center">
                         <span class="text-2xl">${getHashAvatar(userName)}</span>
                         <span class="knitting-hands">🧶🪡</span>
@@ -345,16 +345,17 @@
           `;
         }).join('');
 
-        // 4. 최근 한줄 메시지 목록
+        // 4. 최근 한줄 메시지 목록 (등록 날짜 표시 추가)
         const recentMessagesEl = document.getElementById('recent-messages');
         const recentData = [...data].reverse().slice(0, 5);
         
         recentMessagesEl.innerHTML = recentData.map(row => `
           <div class="p-2.5 bg-amber-50/40 rounded-xl border border-yellow-100 text-xs space-y-0.5">
-            <div class="flex justify-between font-bold text-slate-700">
+            <div class="flex justify-between items-center font-bold text-slate-700">
               <span>${row.name || '무명 작업원'} <span class="font-normal text-slate-400">(${row.item || '작품'} +${row.count || 1}개)</span></span>
+              ${row.date ? `<span class="text-[10px] font-normal text-slate-400 bg-white/60 px-1.5 py-0.5 rounded-md border border-yellow-100">${row.date}</span>` : ''}
             </div>
-            <div class="text-slate-600 font-medium">
+            <div class="text-slate-600 font-medium pt-0.5">
               "${row.message && row.message.trim() !== '' ? row.message : '오늘도 열심히 열뜨했어요! 🧶'}"
             </div>
           </div>
@@ -380,7 +381,7 @@
       } else {
         dashPage.style.display = 'none';
         formPage.style.display = 'block';
-        formBtn.className = formBtn.className.replace('bg-yellow-50 text-amber-800', 'bg-factory-blue text-white shadow-sm');
+        formBtn.className = formBtn.className.replace('bg-slate-100 text-slate-500', 'bg-factory-blue text-white shadow-sm');
         dashBtn.className = dashBtn.className.replace('bg-factory-blue text-white shadow-sm', 'bg-yellow-50 text-amber-800');
       }
     }
