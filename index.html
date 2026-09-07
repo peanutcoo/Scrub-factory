@@ -55,7 +55,7 @@
       100% { left: 110%; transform: rotate(360deg); }
     }
 
-    /* Knitting Worker Dynamic Motion (동물이 진짜 뜨개질하는 연출) */
+    /* Knitting Worker Dynamic Motion */
     .knitting-worker {
       display: inline-flex;
       flex-direction: column;
@@ -154,6 +154,7 @@
       <div class="w-full h-3.5 bg-amber-50 rounded-full overflow-hidden border border-yellow-100 p-0.5">
         <div id="progress-fill" class="h-full bg-gradient-to-r from-yellow-300 to-factory-blue rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
       </div>
+      <p class="text-[10px] text-slate-400 mt-2 text-right">* 구름 조 실적은 제봉 완료분으로 합산 반영됩니다 ☁️</p>
     </div>
 
     <!-- Category Summary Card -->
@@ -178,7 +179,7 @@
       </div>
     </div>
 
-    <!-- Recent Messages Section (최근 응원 한줄 메시지) -->
+    <!-- Recent Messages Section -->
     <div class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-100 space-y-3">
       <h3 class="text-base font-extrabold text-slate-700 flex items-center gap-1.5">
         <i class="fas fa-comment-dots text-factory-blue"></i>
@@ -220,7 +221,6 @@
           <input type="number" id="count" min="1" value="1" required
                  class="w-full p-3 bg-amber-50/40 border border-yellow-100 rounded-xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-base font-bold text-slate-800">
         </div>
-        <!-- 한줄 메시지 입력란 추가 -->
         <div class="space-y-1">
           <label class="text-xs font-bold text-slate-700">한줄 응원 / 소감 메시지 (선택)</label>
           <input type="text" id="message" placeholder="예: 오늘 5개 폭풍 생산 완료! 🔥"
@@ -245,10 +245,9 @@
       { name: '🐤 오리', groupName: '오리 조' },
       { name: '🍞 식빵', groupName: '식빵 조' },
       { name: '🍳 계란후라이', groupName: '계란후라이 조' },
-      { name: '🪡 (번외)제봉', groupName: '제봉 조' }
+      { name: '🪡 (번외)제봉', groupName: '제봉 조', note: '☁️ 구름 쫑매는 중' }
     ];
 
-    // 동물 캐릭터 이모티콘 배열
     const ANIMAL_AVATARS = ['🐱', '🐶', '🐰', '🐻', '🦊', '🐼', '🐨', '🐯', '🐥'];
 
     function getHashAvatar(name) {
@@ -262,7 +261,6 @@
         const res = await fetch(API_URL);
         const data = await res.json();
         
-        let total = 0;
         const catTotals = {
           '🪨 조약돌': 0, '☁️ 구름': 0, '🐤 오리': 0,
           '🍞 식빵': 0, '🍳 계란후라이': 0, '🪡 (번외)제봉': 0
@@ -277,17 +275,22 @@
           const item = row.item ? row.item.trim() : '🪨 조약돌';
           const name = row.name ? row.name.trim() : '무명 작업원';
 
-          total += cnt;
-
           if (catTotals[item] !== undefined) {
             catTotals[item] += cnt;
             groupUserData[item][name] = (groupUserData[item][name] || 0) + cnt;
           }
         });
 
+        // 총 합산 계산 시 [☁️ 구름] 개수 제외 (제봉 개수로 최종 완성 판단)
+        const effectiveTotal = catTotals['🪨 조약돌'] + 
+                               catTotals['🐤 오리'] + 
+                               catTotals['🍞 식빵'] + 
+                               catTotals['🍳 계란후라이'] + 
+                               catTotals['🪡 (번외)제봉'];
+
         // 1. 대시보드 진행률
-        document.getElementById('total-count').innerText = total;
-        const percent = Math.min(Math.round((total / TARGET_GOAL) * 100), 100);
+        document.getElementById('total-count').innerText = effectiveTotal;
+        const percent = Math.min(Math.round((effectiveTotal / TARGET_GOAL) * 100), 100);
         document.getElementById('progress-fill').style.width = percent + '%';
         document.getElementById('progress-percent').innerText = `${percent}%`;
 
@@ -300,7 +303,7 @@
           </div>
         `).join('');
 
-        // 3. 조별 작업자 캐릭터 배치 (동물이 꼼지락 뜨개질하는 연출)
+        // 3. 조별 작업자 캐릭터 배치 (제봉 조에 "구름 쫑매는 중" 문구 반영)
         const groupWorkersEl = document.getElementById('group-workers');
         groupWorkersEl.innerHTML = CATEGORIES.map(cat => {
           const workers = groupUserData[cat.name];
@@ -309,7 +312,10 @@
           return `
             <div class="border-b border-yellow-100 pb-3 last:border-0">
               <div class="flex justify-between items-center mb-1.5">
-                <span class="font-extrabold text-slate-700 text-xs">${cat.groupName}</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="font-extrabold text-slate-700 text-xs">${cat.groupName}</span>
+                  ${cat.note ? `<span class="bg-sky-100 text-factory-deep-blue text-[10px] font-bold px-2 py-0.5 rounded-full border border-sky-200">${cat.note}</span>` : ''}
+                </div>
                 <span class="text-[10px] px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full font-bold">
                   총 ${catTotals[cat.name]}개
                 </span>
@@ -339,7 +345,7 @@
           `;
         }).join('');
 
-        // 4. 최근 한줄 메시지 목록 (최신순 5개)
+        // 4. 최근 한줄 메시지 목록
         const recentMessagesEl = document.getElementById('recent-messages');
         const recentData = [...data].reverse().slice(0, 5);
         
