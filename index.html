@@ -7,44 +7,38 @@
   <!-- Tailwind CSS & FontAwesome Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'factory-bg': '#f4f7fa',
-            'factory-blue': '#2563eb',
-            'factory-light-blue': '#3b82f6',
-            'factory-sky': '#0ea5e9',
-            'factory-dark': '#1e293b',
-          },
-          fontFamily: {
-            pixel: ['"Press Start 2P"', 'cursive'],
-            sans: ['"Noto Sans KR"', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
+  
+  <!-- 구글 정식 지원 귀여운 손글씨 폰트 (개구체 & Press Start 2P) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: 'Noto Sans KR', sans-serif; background-color: #f4f7fa; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: 'Gaegu', cursive, sans-serif;
+      background-color: #fefce8; /* 따뜻한 연노랑 배경 */
+      color: #334155;
+      -webkit-tap-highlight-color: transparent;
+      font-size: 1.25rem; /* 개구체 특성에 맞춰 글자 크기 조정 */
+      line-height: 1.3;
+      -webkit-font-smoothing: antialiased; /* 글자 깨짐 및 자글거림 방지 */
+    }
+
     .pixel-font { font-family: 'Press Start 2P', cursive; }
-    
-    /* Pixel Factory Animation Style - White & Blue Theme */
+
+    /* Pixel Factory Animation Style - Pastel Blue & Yellow Theme */
     .factory-window {
       height: 120px;
-      background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+      background: linear-gradient(135deg, #e0f2fe, #fef08a);
       position: relative;
       overflow: hidden;
-      border-radius: 20px;
+      border-radius: 24px;
       margin-bottom: 20px;
-      box-shadow: inset 0 4px 10px rgba(0,0,0,0.05);
-      border: 1px solid #e0f2fe;
+      box-shadow: 0 4px 15px rgba(253, 224, 71, 0.2);
+      border: 2px solid #fef9c3;
     }
     .gear {
-      position: absolute; color: #0ea5e9;
+      position: absolute; color: #38bdf8;
       animation: gear-spin 4s linear infinite;
     }
     @keyframes gear-spin {
@@ -52,7 +46,7 @@
       to { transform: rotate(360deg); }
     }
     .item-conveyor {
-      position: absolute; bottom: 15px; left: -60px; font-size: 2rem;
+      position: absolute; bottom: 15px; left: -60px; font-size: 2.2rem;
       animation: conveyor-move 8s linear infinite;
     }
     @keyframes conveyor-move {
@@ -69,17 +63,33 @@
       animation: knit-bounce 1.5s ease-in-out infinite alternate;
     }
     @keyframes knit-bounce {
-      0% { transform: translateY(0) rotate(-3deg); }
-      100% { transform: translateY(-6px) rotate(3deg); }
+      0% { transform: translateY(0) rotate(-4deg); }
+      100% { transform: translateY(-7px) rotate(4deg); }
     }
   </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'factory-yellow': '#fef08a',
+            'factory-soft-yellow': '#fffbeb',
+            'factory-blue': '#38bdf8',
+            'factory-deep-blue': '#0284c7',
+            'factory-pastel-blue': '#e0f2fe',
+            'factory-dark': '#334155',
+          }
+        }
+      }
+    }
+  </script>
 </head>
 <body class="max-w-md mx-auto p-4 pb-24">
 
   <!-- Header & Factory Animation -->
-  <header class="text-center mb-6">
-    <div class="pixel-font text-factory-sky text-xs mb-2">MINI KNITTING FACTORY</div>
-    <h1 class="text-2xl font-bold text-factory-dark flex items-center justify-center gap-2">
+  <header class="text-center mb-5">
+    <div class="pixel-font text-factory-blue text-xs mb-2">★ MINI KNITTING FACTORY ★</div>
+    <h1 class="text-3xl font-bold text-factory-dark flex items-center justify-center gap-2">
       <i class="fas fa-industry text-factory-blue"></i>
       두코두코 수세미 공장
     </h1>
@@ -87,9 +97,9 @@
 
   <div class="factory-window">
     <i class="fas fa-cog gear text-4xl" style="top: 20px; left: 30px;"></i>
-    <i class="fas fa-cog gear text-2xl" style="top: 60px; left: 70px; animation-duration: 2s; animation-direction: reverse;"></i>
+    <i class="fas fa-cog gear text-2xl" style="top: 60px; left: 70px; animation-duration: 2s; animation-direction: reverse; color: #facc15;"></i>
     
-    <!-- Moving Items (6 categories) -->
+    <!-- Moving Items -->
     <span class="item-conveyor" style="animation-delay: 0s;">🪨</span>
     <span class="item-conveyor" style="animation-delay: 1.3s;">☁️</span>
     <span class="item-conveyor" style="animation-delay: 2.6s;">🐤</span>
@@ -99,80 +109,80 @@
   </div>
 
   <!-- Bottom Navigation -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-100 shadow-lg z-50 max-w-md mx-auto rounded-t-3xl">
+  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-yellow-100 shadow-lg z-50 max-w-md mx-auto rounded-t-3xl">
     <div class="flex justify-around p-3">
-      <button onclick="switchTab('dash')" id="tab-dash-btn" class="flex flex-col items-center gap-1.5 p-2 px-6 rounded-xl bg-factory-blue text-white active:scale-95 transition-all shadow-sm">
+      <button onclick="switchTab('dash')" id="tab-dash-btn" class="flex flex-col items-center gap-1 p-2 px-6 rounded-2xl bg-factory-blue text-white active:scale-95 transition-all shadow-sm">
         <i class="fas fa-chart-line text-lg"></i>
-        <span class="text-xs font-bold">작업현황</span>
+        <span class="text-base font-bold">작업현황</span>
       </button>
-      <button onclick="switchTab('form')" id="tab-form-btn" class="flex flex-col items-center gap-1.5 p-2 px-6 rounded-xl bg-slate-100 text-slate-500 active:scale-95 transition-all">
+      <button onclick="switchTab('form')" id="tab-form-btn" class="flex flex-col items-center gap-1 p-2 px-6 rounded-2xl bg-yellow-50 text-amber-800 active:scale-95 transition-all">
         <i class="fas fa-edit text-lg"></i>
-        <span class="text-xs font-bold">생산물 등록</span>
+        <span class="text-base font-bold">생산물 등록</span>
       </button>
     </div>
   </nav>
 
   <!-- Page 1: 작업현황 (Dashboard) -->
-  <main id="page-dash" class="space-y-6">
+  <main id="page-dash" class="space-y-5">
     
     <!-- Overall Goal Card -->
-    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-          <i class="fas fa-bullseye text-factory-blue"></i>
+    <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-yellow-100">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="text-2xl font-bold text-slate-700 flex items-center gap-2">
+          <i class="fas fa-bullseye text-amber-400"></i>
           전체 목표 달성률
         </h3>
-        <span class="pixel-font text-xs text-factory-sky" id="progress-percent">0%</span>
+        <span class="pixel-font text-xs text-factory-deep-blue" id="progress-percent">0%</span>
       </div>
       <div class="flex justify-between items-end mb-2.5">
-        <div class="text-sm text-slate-500">현재 <strong id="total-count" class="text-3xl font-extrabold text-factory-blue">0</strong> 개 생산 완료!</div>
-        <div class="text-xs text-slate-400">목표: <span id="target-count">100</span>개</div>
+        <div class="text-lg text-slate-600">현재 <strong id="total-count" class="text-4xl font-extrabold text-factory-deep-blue">0</strong> 개 완료!</div>
+        <div class="text-base text-slate-400">목표: <span id="target-count">100</span>개</div>
       </div>
-      <div class="w-full h-4 bg-slate-100 rounded-full overflow-hidden">
-        <div id="progress-fill" class="h-full bg-gradient-to-r from-factory-sky to-factory-blue rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
+      <div class="w-full h-5 bg-amber-50 rounded-full overflow-hidden border border-yellow-100 p-0.5">
+        <div id="progress-fill" class="h-full bg-gradient-to-r from-yellow-300 to-factory-blue rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
       </div>
     </div>
 
     <!-- Category Summary Card -->
-    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-      <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-        <i class="fas fa-boxes-stacked text-factory-sky"></i>
+    <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-yellow-100">
+      <h3 class="text-2xl font-bold text-slate-700 mb-4 flex items-center gap-2">
+        <i class="fas fa-boxes-stacked text-factory-blue"></i>
         작품별 생산 현황
       </h3>
-      <div id="category-summary" class="grid grid-cols-3 gap-3 text-center">
+      <div id="category-summary" class="grid grid-cols-3 gap-2 text-center">
         <!-- JS로 동적 생성 -->
       </div>
     </div>
 
     <!-- Group Workers Section -->
-    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 space-y-6">
-      <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-        <i class="fas fa-users text-factory-blue"></i>
+    <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-yellow-100 space-y-5">
+      <h3 class="text-2xl font-bold text-slate-700 flex items-center gap-2">
+        <i class="fas fa-users text-amber-400"></i>
         조별 작업자 현황
       </h3>
-      <div id="group-workers" class="space-y-6">
-        <!-- JS로 각 조별 이모티콘 및 라인 생성 -->
+      <div id="group-workers" class="space-y-5">
+        <!-- JS로 생성 -->
       </div>
     </div>
 
   </main>
 
   <!-- Page 2: 생산물 등록 (Form) -->
-  <main id="page-form" class="space-y-6" style="display: none;">
-    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-      <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-        <i class="fas fa-pencil-alt text-factory-sky"></i>
+  <main id="page-form" class="space-y-5" style="display: none;">
+    <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-yellow-100">
+      <h3 class="text-2xl font-bold text-slate-700 mb-6 flex items-center gap-2">
+        <i class="fas fa-pencil-alt text-factory-blue"></i>
         오늘의 생산량 등록하기
       </h3>
       <form id="scrub-form" class="space-y-5">
-        <div class="space-y-2">
-          <label class="text-sm font-bold text-slate-700">작업원 이름 (닉네임)</label>
+        <div class="space-y-1.5">
+          <label class="text-lg font-bold text-slate-700">작업원 이름 (닉네임)</label>
           <input type="text" id="name" placeholder="예: 김뜨개" required
-                 class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-slate-800">
+                 class="w-full p-3 bg-amber-50/50 border-2 border-yellow-100 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-slate-800 text-lg">
         </div>
-        <div class="space-y-2">
-          <label class="text-sm font-bold text-slate-700">오늘 뜬 작품</label>
-          <select id="item" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none appearance-none text-base text-slate-800">
+        <div class="space-y-1.5">
+          <label class="text-lg font-bold text-slate-700">오늘 뜬 작품</label>
+          <select id="item" class="w-full p-3 bg-amber-50/50 border-2 border-yellow-100 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none appearance-none text-lg text-slate-800">
             <option value="🪨 조약돌">🪨 조약돌</option>
             <option value="☁️ 구름">☁️ 구름</option>
             <option value="🐤 오리">🐤 오리</option>
@@ -181,12 +191,12 @@
             <option value="🪡 (번외)제봉">🪡 (번외)제봉</option>
           </select>
         </div>
-        <div class="space-y-2">
-          <label class="text-sm font-bold text-slate-700">완성한 개수</label>
+        <div class="space-y-1.5">
+          <label class="text-lg font-bold text-slate-700">완성한 개수</label>
           <input type="number" id="count" min="1" value="1" required
-                 class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-lg font-bold text-slate-800">
+                 class="w-full p-3 bg-amber-50/50 border-2 border-yellow-100 rounded-2xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-2xl font-bold text-slate-800">
         </div>
-        <button type="submit" class="w-full p-4 bg-factory-blue hover:bg-factory-light-blue text-white rounded-2xl text-base font-bold active:scale-95 transition-all shadow-md flex items-center justify-center gap-2">
+        <button type="submit" class="w-full p-4 bg-factory-blue hover:bg-factory-deep-blue text-white rounded-2xl text-xl font-bold active:scale-95 transition-all shadow-md flex items-center justify-center gap-2">
           <i class="fas fa-paper-plane"></i>
           <span>공장에 보고하기</span>
         </button>
@@ -197,7 +207,7 @@
   <script>
     // ⚠️⚠️⚠️ 여기에 본인의 구글 Apps Script URL을 넣으세요! ⚠️⚠️⚠️
     const API_URL = "https://script.google.com/macros/s/AKfycbw5rvdKsgZa8dfQp54Se01TH2hEjnwhwuEBLGbBH7FUzYZ9YqZ3S2hcXM2l7BYhKmBx/exec";
-    const TARGET_GOAL = 100; // 전체 목표 수량 100개 설정
+    const TARGET_GOAL = 100;
 
     const CATEGORIES = [
       { name: '🪨 조약돌', groupName: '조약돌 조' },
@@ -208,7 +218,6 @@
       { name: '🪡 (번외)제봉', groupName: '제봉 조' }
     ];
 
-    // 작업원 이모티콘 랜덤 풀 (뜨개질하는 캐릭터 연출)
     const AVATARS = ['🧶🐱', '🧶🐶', '🧶🐰', '🧶🐻', '🧶🦊', '🧶🐼', '🧶🐨', '🧶🐯', '🧶🐥'];
 
     function getHashAvatar(name) {
@@ -254,42 +263,42 @@
         // 2. 카테고리별 요약 카드
         const catSummaryEl = document.getElementById('category-summary');
         catSummaryEl.innerHTML = CATEGORIES.map(cat => `
-          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100">
-            <div class="text-xs text-slate-500 font-bold mb-1">${cat.name}</div>
-            <div class="text-lg font-extrabold text-factory-blue">${catTotals[cat.name] || 0}개</div>
+          <div class="bg-amber-50/60 p-2 rounded-2xl border border-yellow-100">
+            <div class="text-sm text-slate-600 font-bold mb-0.5">${cat.name}</div>
+            <div class="text-xl font-extrabold text-factory-deep-blue">${catTotals[cat.name] || 0}개</div>
           </div>
         `).join('');
 
-        // 3. 조별 작업자 캐릭터 배치 (단어 중복 제거 수정 완료)
+        // 3. 조별 작업자 캐릭터 배치
         const groupWorkersEl = document.getElementById('group-workers');
         groupWorkersEl.innerHTML = CATEGORIES.map(cat => {
           const workers = groupUserData[cat.name];
           const workerEntries = Object.entries(workers);
 
           return `
-            <div class="border-b border-slate-100 pb-4 last:border-0">
-              <div class="flex justify-between items-center mb-3">
-                <span class="font-bold text-slate-700">${cat.groupName}</span>
-                <span class="text-xs px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full font-bold">
+            <div class="border-b border-yellow-100 pb-4 last:border-0">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-bold text-slate-700 text-xl">${cat.groupName}</span>
+                <span class="text-sm px-3 py-0.5 bg-amber-100 text-amber-800 rounded-full font-bold">
                   총 ${catTotals[cat.name]}개
                 </span>
               </div>
-              <div class="flex flex-wrap gap-4 min-h-[60px] p-3 bg-slate-50 rounded-2xl items-center border border-slate-100">
+              <div class="flex flex-wrap gap-4 min-h-[65px] p-3.5 bg-amber-50/40 rounded-2xl items-center border border-yellow-100">
                 ${
                   workerEntries.length > 0 
                   ? workerEntries.map(([userName, count], idx) => `
                     <div class="knitting-worker" style="animation-delay: ${idx * 0.2}s;">
                       <!-- 머리 위 누적 개수 배지 -->
-                      <span class="bg-factory-blue text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm mb-1">
+                      <span class="bg-factory-blue text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm mb-1">
                         +${count}개
                       </span>
                       <!-- 랜덤 뜨개질 이모티콘 -->
-                      <span class="text-2xl">${getHashAvatar(userName)}</span>
+                      <span class="text-3xl">${getHashAvatar(userName)}</span>
                       <!-- 작업원 이름 -->
-                      <span class="text-xs font-bold text-slate-600 mt-1">${userName}</span>
+                      <span class="text-sm font-bold text-slate-600 mt-1">${userName}</span>
                     </div>
                   `).join('')
-                  : '<span class="text-xs text-slate-400">아직 참여한 작업원이 없습니다.</span>'
+                  : '<span class="text-sm text-slate-400">아직 참여한 작업원이 없습니다 🐣</span>'
                 }
               </div>
             </div>
@@ -310,14 +319,14 @@
       if (tab === 'dash') {
         dashPage.style.display = 'block';
         formPage.style.display = 'none';
-        dashBtn.className = dashBtn.className.replace('bg-slate-100 text-slate-500', 'bg-factory-blue text-white shadow-sm');
-        formBtn.className = formBtn.className.replace('bg-factory-blue text-white shadow-sm', 'bg-slate-100 text-slate-500');
+        dashBtn.className = dashBtn.className.replace('bg-yellow-50 text-amber-800', 'bg-factory-blue text-white shadow-sm');
+        formBtn.className = formBtn.className.replace('bg-factory-blue text-white shadow-sm', 'bg-yellow-50 text-amber-800');
         loadData();
       } else {
         dashPage.style.display = 'none';
         formPage.style.display = 'block';
-        formBtn.className = formBtn.className.replace('bg-slate-100 text-slate-500', 'bg-factory-blue text-white shadow-sm');
-        dashBtn.className = dashBtn.className.replace('bg-factory-blue text-white shadow-sm', 'bg-slate-100 text-slate-500');
+        formBtn.className = formBtn.className.replace('bg-yellow-50 text-amber-800', 'bg-factory-blue text-white shadow-sm');
+        dashBtn.className = dashBtn.className.replace('bg-factory-blue text-white shadow-sm', 'bg-yellow-50 text-amber-800');
       }
     }
 
