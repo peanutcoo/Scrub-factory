@@ -55,7 +55,7 @@
       100% { left: 110%; transform: rotate(360deg); }
     }
 
-    /* Knitting Worker Dynamic Motion */
+    /* Knitting Worker Dynamic Motion & Pixel Effect */
     .knitting-worker {
       display: inline-flex;
       flex-direction: column;
@@ -68,11 +68,22 @@
       50% { transform: translateY(-3px) rotate(2deg) scale(1.02); }
       100% { transform: translateY(-5px) rotate(-1deg) scale(1); }
     }
+    
+    /* 동물 아이콘 픽셀 도트 질감 연출 */
+    .pixel-animal {
+      image-rendering: pixelated;
+      font-size: 1.75rem;
+      filter: drop-shadow(1.5px 1.5px 0px rgba(0, 0, 0, 0.15));
+      display: inline-block;
+      line-height: 1;
+    }
+
     .knitting-hands {
       font-size: 0.7rem;
       position: absolute;
-      bottom: 12px;
-      right: -4px;
+      bottom: 10px;
+      right: -5px;
+      filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.1));
       animation: needle-wiggle 0.6s ease-in-out infinite alternate;
     }
     @keyframes needle-wiggle {
@@ -248,7 +259,7 @@
       { name: '🪡 (번외)제봉', groupName: '제봉 조', note: '☁️ 구름 쫑매는 중' }
     ];
 
-    // 동물 캐릭터 이모티콘 배열 (20가지로 대폭 확장)
+    // 동물 캐릭터 이모티콘 20종
     const ANIMAL_AVATARS = [
       '🐱', '🐶', '🐰', '🐻', '🦊', 
       '🐼', '🐨', '🐯', '🐥', '🦁', 
@@ -256,13 +267,15 @@
       '🐧', '🦦', '🦔', '🐿️', '🦙'
     ];
 
-    function getHashAvatar(name) {
-      let hash = 0;
-      for (let i = 0; i < name.length; i++) {
-        hash = (hash << 5) - hash + name.charCodeAt(i);
-        hash |= 0; // 32비트 정수 변환
+    const userAvatarMap = {};
+    let avatarIndexCounter = 0;
+
+    function getUserAvatar(name) {
+      if (!userAvatarMap[name]) {
+        userAvatarMap[name] = ANIMAL_AVATARS[avatarIndexCounter % ANIMAL_AVATARS.length];
+        avatarIndexCounter++;
       }
-      return ANIMAL_AVATARS[Math.abs(hash) % ANIMAL_AVATARS.length];
+      return userAvatarMap[name];
     }
 
     async function loadData() {
@@ -270,6 +283,12 @@
         const res = await fetch(API_URL);
         const data = await res.json();
         
+        data.forEach(row => {
+          if (row.name && row.name.trim()) {
+            getUserAvatar(row.name.trim());
+          }
+        });
+
         const catTotals = {
           '🪨 조약돌': 0, '☁️ 구름': 0, '🐤 오리': 0,
           '🍞 식빵': 0, '🍳 계란후라이': 0, '🪡 (번외)제봉': 0
@@ -290,7 +309,6 @@
           }
         });
 
-        // 총 합산 계산 시 [☁️ 구름] 개수 제외
         const effectiveTotal = catTotals['🪨 조약돌'] + 
                                catTotals['🐤 오리'] + 
                                catTotals['🍞 식빵'] + 
@@ -312,7 +330,7 @@
           </div>
         `).join('');
 
-        // 3. 조별 작업자 캐릭터 배치
+        // 3. 조별 작업자 캐릭터 배치 (동물 캐릭터 도트 픽셀 효과 반영)
         const groupWorkersEl = document.getElementById('group-workers');
         groupWorkersEl.innerHTML = CATEGORIES.map(cat => {
           const workers = groupUserData[cat.name];
@@ -338,9 +356,9 @@
                       <span class="bg-factory-blue text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full shadow-sm mb-0.5">
                         +${count}개
                       </span>
-                      <!-- 이모티콘 조합 -->
+                      <!-- 픽셀 효과가 추가된 동물 아이콘 조합 -->
                       <div class="relative flex items-center justify-center">
-                        <span class="text-2xl">${getHashAvatar(userName)}</span>
+                        <span class="pixel-animal">${getUserAvatar(userName)}</span>
                         <span class="knitting-hands">🧶🪡</span>
                       </div>
                       <!-- 작업원 이름 -->
@@ -391,7 +409,7 @@
         dashPage.style.display = 'none';
         formPage.style.display = 'block';
         formBtn.className = formBtn.className.replace('bg-yellow-50 text-amber-800', 'bg-factory-blue text-white shadow-sm');
-        dashBtn.className = dashBtn.className.replace('bg-factory-blue text-white shadow-sm', 'bg-yellow-50 text-amber-800');
+        dashBtn.className = dashBtn.className.replace('bg-factory-blue text-white shadow-sm', 'bg-slate-100 text-slate-500');
       }
     }
 
