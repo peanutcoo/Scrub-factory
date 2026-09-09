@@ -248,12 +248,21 @@
       { name: '🪡 (번외)제봉', groupName: '제봉 조', note: '☁️ 구름 쫑매는 중' }
     ];
 
-    const ANIMAL_AVATARS = ['🐱', '🐶', '🐰', '🐻', '🦊', '🐼', '🐨', '🐯', '🐥'];
+    // 동물 캐릭터 이모티콘 배열 (20가지로 대폭 확장)
+    const ANIMAL_AVATARS = [
+      '🐱', '🐶', '🐰', '🐻', '🦊', 
+      '🐼', '🐨', '🐯', '🐥', '🦁', 
+      '🐮', '🐷', '🐸', '🐹', '🐵', 
+      '🐧', '🦦', '🦔', '🐿️', '🦙'
+    ];
 
     function getHashAvatar(name) {
       let hash = 0;
-      for (let i = 0; i < name.length; i++) hash += name.charCodeAt(i);
-      return ANIMAL_AVATARS[hash % ANIMAL_AVATARS.length];
+      for (let i = 0; i < name.length; i++) {
+        hash = (hash << 5) - hash + name.charCodeAt(i);
+        hash |= 0; // 32비트 정수 변환
+      }
+      return ANIMAL_AVATARS[Math.abs(hash) % ANIMAL_AVATARS.length];
     }
 
     async function loadData() {
@@ -345,7 +354,7 @@
           `;
         }).join('');
 
-        // 4. 최근 한줄 메시지 목록 (등록 날짜 표시 추가)
+        // 4. 최근 한줄 메시지 목록
         const recentMessagesEl = document.getElementById('recent-messages');
         const recentData = [...data].reverse().slice(0, 5);
         
@@ -381,7 +390,7 @@
       } else {
         dashPage.style.display = 'none';
         formPage.style.display = 'block';
-        formBtn.className = formBtn.className.replace('bg-slate-100 text-slate-500', 'bg-factory-blue text-white shadow-sm');
+        formBtn.className = formBtn.className.replace('bg-yellow-50 text-amber-800', 'bg-factory-blue text-white shadow-sm');
         dashBtn.className = dashBtn.className.replace('bg-factory-blue text-white shadow-sm', 'bg-yellow-50 text-amber-800');
       }
     }
