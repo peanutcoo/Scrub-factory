@@ -8,54 +8,110 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
-  <!-- 나눔스퀘어라운드 폰트 & Press Start 2P -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <!-- 나눔스퀘어라운드 폰트 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.css">
 
   <style>
     body {
-      font-family: 'NanumSquareRound', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #fefce8; /* 따뜻한 연노랑 배경 */
+      font-family: 'NanumSquareRound', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #fefce8; /* 따뜻한 연노랑 / 크림 테마 */
       color: #334155;
       -webkit-tap-highlight-color: transparent;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       line-height: 1.4;
-      -webkit-font-smoothing: antialiased;
     }
 
-    .pixel-font { font-family: 'Press Start 2P', cursive; }
+    /* 소프트 아케이드 오피스 카통 스타일 */
+    .soft-card {
+      background-color: #ffffff;
+      border: 2px solid #fde047;
+      border-radius: 20px;
+      box-shadow: 0 4px 14px rgba(250, 204, 21, 0.15), inset 0 0 0 2px #fef9c3;
+    }
 
-    /* Pixel Factory Animation Style */
+    .soft-card-cream {
+      background-color: #fffbeb;
+      border: 2px solid #fef08a;
+      border-radius: 16px;
+    }
+
+    .soft-btn-yellow {
+      background-color: #facc15;
+      color: #713f12;
+      border: 2px solid #eab308;
+      border-radius: 14px;
+      box-shadow: 0 3px 0px #ca8a04;
+      font-weight: 800;
+      transition: all 0.1s ease;
+    }
+    .soft-btn-yellow:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0px #ca8a04;
+    }
+
+    .soft-btn-sky {
+      background-color: #e0f2fe;
+      color: #0369a1;
+      border: 2px solid #7dd3fc;
+      border-radius: 14px;
+      box-shadow: 0 3px 0px #38bdf8;
+      font-weight: 800;
+      transition: all 0.1s ease;
+    }
+    .soft-btn-sky:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0px #38bdf8;
+    }
+
+    /* 상단 벨트 애니메이션 */
     .factory-window {
-      height: 110px;
-      background: linear-gradient(135deg, #e0f2fe, #fef08a);
+      height: 100px;
+      background: linear-gradient(135deg, #fef9c3, #e0f2fe);
       position: relative;
       overflow: hidden;
+      border: 2px solid #fde047;
       border-radius: 20px;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 12px rgba(253, 224, 71, 0.15);
-      border: 2px solid #fef9c3;
+      box-shadow: inset 0 0 12px rgba(250, 204, 21, 0.2);
     }
+
     .gear {
       position: absolute; color: #38bdf8;
-      animation: gear-spin 4s linear infinite;
+      animation: gear-spin 6s linear infinite;
     }
     @keyframes gear-spin {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
+
     .item-conveyor {
-      position: absolute; bottom: 12px; left: -60px; font-size: 2rem;
-      animation: conveyor-move 8s linear infinite;
+      position: absolute; bottom: 10px; left: -60px; font-size: 1.8rem;
+      animation: conveyor-move 7s linear infinite;
     }
     @keyframes conveyor-move {
-      0% { left: -60px; transform: rotate(0deg); }
-      100% { left: 110%; transform: rotate(360deg); }
+      0% { left: -60px; }
+      100% { left: 110%; }
     }
 
-    /* Knitting Worker Dynamic Motion & Pixel Effect */
+    /* 분담 작업실 (AI Office Room Tile) */
+    .office-room {
+      background-color: #fafaf9;
+      background-image: 
+        radial-gradient(#e7e5e4 1px, transparent 1px);
+      background-size: 12px 12px;
+      border: 2px solid #e7e5e4;
+      border-radius: 16px;
+      position: relative;
+    }
+
+    /* 책상 파티션 레이아웃 */
+    .desk-partition {
+      background: #ffffff;
+      border: 1.5px solid #fde047;
+      border-radius: 12px;
+      padding: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+
     .knitting-worker {
       display: inline-flex;
       flex-direction: column;
@@ -64,140 +120,126 @@
       animation: knit-work 1.2s ease-in-out infinite alternate;
     }
     @keyframes knit-work {
-      0% { transform: translateY(0) rotate(-3deg) scale(0.98); }
-      50% { transform: translateY(-3px) rotate(2deg) scale(1.02); }
-      100% { transform: translateY(-5px) rotate(-1deg) scale(1); }
+      0% { transform: translateY(0) scale(0.98); }
+      50% { transform: translateY(-3px) scale(1.02); }
+      100% { transform: translateY(-4px) scale(1); }
     }
     
-    /* 동물 아이콘 픽셀 도트 질감 연출 */
     .pixel-animal {
-      image-rendering: pixelated;
-      font-size: 1.75rem;
-      filter: drop-shadow(1.5px 1.5px 0px rgba(0, 0, 0, 0.15));
+      font-size: 1.7rem;
       display: inline-block;
       line-height: 1;
+      filter: drop-shadow(0 2px 4px rgba(250, 204, 21, 0.3));
     }
 
     .knitting-hands {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       position: absolute;
-      bottom: 10px;
-      right: -5px;
-      filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.1));
-      animation: needle-wiggle 0.6s ease-in-out infinite alternate;
-    }
-    @keyframes needle-wiggle {
-      from { transform: rotate(-15deg) scale(0.9); }
-      to { transform: rotate(15deg) scale(1.1); }
+      bottom: 6px;
+      right: -6px;
     }
   </style>
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            'factory-yellow': '#fef08a',
-            'factory-soft-yellow': '#fffbeb',
-            'factory-blue': '#38bdf8',
-            'factory-deep-blue': '#0284c7',
-            'factory-pastel-blue': '#e0f2fe',
-            'factory-dark': '#334155',
+            'factory-yellow': '#fde047',
+            'factory-dark-yellow': '#ca8a04',
+            'factory-cream': '#fffbeb',
+            'factory-sky': '#38bdf8',
           }
         }
       }
     }
   </script>
 </head>
-<body class="max-w-md mx-auto p-4 pb-24">
+<body class="max-w-md mx-auto p-4 pb-28">
 
-  <!-- Header & Factory Animation -->
-  <header class="text-center mb-4">
-    <div class="pixel-font text-factory-blue text-[10px] mb-1.5">★ MINI KNITTING FACTORY ★</div>
-    <h1 class="text-xl font-extrabold text-factory-dark flex items-center justify-center gap-2">
-      <i class="fas fa-industry text-factory-blue"></i>
+  <!-- Office Header Container -->
+  <header class="text-center mb-4 bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border-2 border-yellow-300 shadow-sm">
+    <div class="inline-block px-3 py-0.5 bg-yellow-100 text-amber-800 text-[11px] font-black rounded-full mb-1 border border-yellow-200">
+      💛 WORK DIVISION • LIVE OFFICE 💛
+    </div>
+    <h1 class="text-xl font-black text-slate-800 flex items-center justify-center gap-2">
+      <i class="fas fa-industry text-amber-400"></i>
       두코두코 수세미 공장
     </h1>
   </header>
 
-  <div class="factory-window">
-    <i class="fas fa-cog gear text-3xl" style="top: 18px; left: 25px;"></i>
-    <i class="fas fa-cog gear text-xl" style="top: 52px; left: 60px; animation-duration: 2s; animation-direction: reverse; color: #facc15;"></i>
+  <!-- Factory Conveyor Animation Window -->
+  <div class="factory-window mb-4">
+    <i class="fas fa-cog gear text-3xl" style="top: 12px; left: 18px;"></i>
+    <i class="fas fa-cog gear text-xl" style="top: 45px; left: 50px; animation-duration: 3s; animation-direction: reverse; color: #facc15;"></i>
     
     <!-- Moving Items -->
     <span class="item-conveyor" style="animation-delay: 0s;">🪨</span>
-    <span class="item-conveyor" style="animation-delay: 1.3s;">☁️</span>
-    <span class="item-conveyor" style="animation-delay: 2.6s;">🐤</span>
-    <span class="item-conveyor" style="animation-delay: 3.9s;">🍞</span>
-    <span class="item-conveyor" style="animation-delay: 5.2s;">🍳</span>
-    <span class="item-conveyor" style="animation-delay: 6.5s;">🪡</span>
+    <span class="item-conveyor" style="animation-delay: 1.2s;">☁️</span>
+    <span class="item-conveyor" style="animation-delay: 2.4s;">🐤</span>
+    <span class="item-conveyor" style="animation-delay: 3.6s;">🍞</span>
+    <span class="item-conveyor" style="animation-delay: 4.8s;">🍳</span>
+    <span class="item-conveyor" style="animation-delay: 6.0s;">🪡</span>
   </div>
-
-  <!-- Bottom Navigation -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-yellow-100 shadow-lg z-50 max-w-md mx-auto rounded-t-2xl">
-    <div class="flex justify-around p-2.5">
-      <button onclick="switchTab('dash')" id="tab-dash-btn" class="flex flex-col items-center gap-1 p-2 px-6 rounded-xl bg-factory-blue text-white active:scale-95 transition-all shadow-sm">
-        <i class="fas fa-chart-line text-sm"></i>
-        <span class="text-xs font-bold">작업현황</span>
-      </button>
-      <button onclick="switchTab('form')" id="tab-form-btn" class="flex flex-col items-center gap-1 p-2 px-6 rounded-xl bg-yellow-50 text-amber-800 active:scale-95 transition-all">
-        <i class="fas fa-edit text-sm"></i>
-        <span class="text-xs font-bold">생산물 등록</span>
-      </button>
-    </div>
-  </nav>
 
   <!-- Page 1: 작업현황 (Dashboard) -->
   <main id="page-dash" class="space-y-4">
     
     <!-- Overall Goal Card -->
-    <div class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-100">
-      <div class="flex justify-between items-center mb-2.5">
-        <h3 class="text-base font-extrabold text-slate-700 flex items-center gap-1.5">
+    <div class="soft-card p-4">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="text-sm font-black text-slate-700 flex items-center gap-1.5">
           <i class="fas fa-bullseye text-amber-400"></i>
           전체 목표 달성률
         </h3>
-        <span class="pixel-font text-[10px] text-factory-deep-blue" id="progress-percent">0%</span>
+        <span class="text-xs font-black text-amber-900 bg-amber-100 px-2.5 py-0.5 rounded-full border border-yellow-300" id="progress-percent">0%</span>
       </div>
       <div class="flex justify-between items-end mb-2">
-        <div class="text-xs text-slate-600">현재 <strong id="total-count" class="text-xl font-extrabold text-factory-deep-blue">0</strong> 개 완료!</div>
-        <div class="text-[11px] text-slate-400">목표: <span id="target-count">100</span>개</div>
+        <div class="text-xs font-bold text-slate-600">현재 <strong id="total-count" class="text-xl font-black text-amber-600">0</strong> 개 완료!</div>
+        <div class="text-[11px] font-bold text-slate-400">목표: <span id="target-count">100</span>개</div>
       </div>
-      <div class="w-full h-3.5 bg-amber-50 rounded-full overflow-hidden border border-yellow-100 p-0.5">
-        <div id="progress-fill" class="h-full bg-gradient-to-r from-yellow-300 to-factory-blue rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
+      <!-- Progress Bar -->
+      <div class="w-full h-4 bg-amber-50 rounded-full overflow-hidden border border-yellow-200 p-0.5">
+        <div id="progress-fill" class="h-full bg-gradient-to-r from-yellow-300 to-sky-400 rounded-full transition-all duration-700" style="width: 0%"></div>
       </div>
-      <p class="text-[10px] text-slate-400 mt-2 text-right">* 구름 조 실적은 제봉 완료분으로 합산 반영됩니다 ☁️</p>
+      <p class="text-[10px] font-bold text-slate-400 mt-2 text-right">* 구름 조 실적은 제봉 완료분으로 합산 반영 ☁️</p>
     </div>
 
     <!-- Category Summary Card -->
-    <div class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-100">
-      <h3 class="text-base font-extrabold text-slate-700 mb-3 flex items-center gap-1.5">
-        <i class="fas fa-boxes-stacked text-factory-blue"></i>
+    <div class="soft-card p-4">
+      <h3 class="text-sm font-black text-slate-700 mb-3 flex items-center gap-1.5">
+        <i class="fas fa-boxes-stacked text-sky-400"></i>
         작품별 생산 현황
       </h3>
       <div id="category-summary" class="grid grid-cols-3 gap-2 text-center">
-        <!-- JS로 동적 생성 -->
+        <!-- JS로 생성 -->
       </div>
     </div>
 
-    <!-- Group Workers Section -->
-    <div class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-100 space-y-4">
-      <h3 class="text-base font-extrabold text-slate-700 flex items-center gap-1.5">
-        <i class="fas fa-users text-amber-400"></i>
-        조별 작업자 현황
-      </h3>
+    <!-- Group Workers Section (AI Division Office Rooms) -->
+    <div class="soft-card p-4 space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="text-sm font-black text-slate-700 flex items-center gap-1.5">
+          <i class="fas fa-building text-amber-400"></i>
+          조별 작업실 분담 현황 (OFFICE ROOMS)
+        </h3>
+        <span class="text-[10px] bg-slate-100 text-slate-500 font-bold px-2 py-0.5 rounded-md">6개 작업실</span>
+      </div>
+
+      <!-- 작업실 타일 목록 -->
       <div id="group-workers" class="space-y-4">
         <!-- JS로 생성 -->
       </div>
     </div>
 
     <!-- Recent Messages Section -->
-    <div class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-100 space-y-3">
-      <h3 class="text-base font-extrabold text-slate-700 flex items-center gap-1.5">
-        <i class="fas fa-comment-dots text-factory-blue"></i>
+    <div class="soft-card p-4 space-y-3">
+      <h3 class="text-sm font-black text-slate-700 flex items-center gap-1.5">
+        <i class="fas fa-comment-dots text-sky-400"></i>
         최근 공장 소식 & 한줄 메시지
       </h3>
       <div id="recent-messages" class="space-y-2">
-        <div class="text-[11px] text-slate-400 text-center py-3">메시지를 불러오는 중...</div>
+        <div class="text-xs text-slate-400 text-center py-3 font-bold">메시지를 불러오는 중...</div>
       </div>
     </div>
 
@@ -205,20 +247,20 @@
 
   <!-- Page 2: 생산물 등록 (Form) -->
   <main id="page-form" class="space-y-4" style="display: none;">
-    <div class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-100">
-      <h3 class="text-base font-extrabold text-slate-700 mb-4 flex items-center gap-1.5">
-        <i class="fas fa-pencil-alt text-factory-blue"></i>
+    <div class="soft-card p-4">
+      <h3 class="text-sm font-black text-slate-700 mb-4 flex items-center gap-1.5">
+        <i class="fas fa-pen-to-square text-amber-400"></i>
         오늘의 생산량 등록하기
       </h3>
       <form id="scrub-form" class="space-y-3.5">
         <div class="space-y-1">
-          <label class="text-xs font-bold text-slate-700">작업원 이름 (닉네임)</label>
+          <label class="text-xs font-bold text-slate-600">작업원 이름 (닉네임)</label>
           <input type="text" id="name" placeholder="예: 김뜨개" required
-                 class="w-full p-3 bg-amber-50/40 border border-yellow-100 rounded-xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-slate-800 text-xs">
+                 class="w-full p-2.5 bg-amber-50/60 border border-yellow-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-300 text-slate-800 text-xs font-bold">
         </div>
         <div class="space-y-1">
-          <label class="text-xs font-bold text-slate-700">오늘 뜬 작품</label>
-          <select id="item" class="w-full p-3 bg-amber-50/40 border border-yellow-100 rounded-xl focus:ring-2 focus:ring-factory-blue focus:outline-none appearance-none text-xs text-slate-800">
+          <label class="text-xs font-bold text-slate-600">오늘 뜬 작품</label>
+          <select id="item" class="w-full p-2.5 bg-amber-50/60 border border-yellow-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-300 text-xs font-bold text-slate-800">
             <option value="🪨 조약돌">🪨 조약돌</option>
             <option value="☁️ 구름">☁️ 구름</option>
             <option value="🐤 오리">🐤 오리</option>
@@ -228,16 +270,16 @@
           </select>
         </div>
         <div class="space-y-1">
-          <label class="text-xs font-bold text-slate-700">완성한 개수</label>
+          <label class="text-xs font-bold text-slate-600">완성한 개수</label>
           <input type="number" id="count" min="1" value="1" required
-                 class="w-full p-3 bg-amber-50/40 border border-yellow-100 rounded-xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-base font-bold text-slate-800">
+                 class="w-full p-2.5 bg-amber-50/60 border border-yellow-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-300 text-base font-black text-slate-800">
         </div>
         <div class="space-y-1">
-          <label class="text-xs font-bold text-slate-700">한줄 응원 / 소감 메시지 (선택)</label>
+          <label class="text-xs font-bold text-slate-600">한줄 응원 / 소감 메시지 (선택)</label>
           <input type="text" id="message" placeholder="예: 오늘 5개 폭풍 생산 완료! 🔥"
-                 class="w-full p-3 bg-amber-50/40 border border-yellow-100 rounded-xl focus:ring-2 focus:ring-factory-blue focus:outline-none text-slate-800 text-xs">
+                 class="w-full p-2.5 bg-amber-50/60 border border-yellow-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-300 text-slate-800 text-xs font-bold">
         </div>
-        <button type="submit" class="w-full p-3.5 bg-factory-blue hover:bg-factory-deep-blue text-white rounded-xl text-sm font-bold active:scale-95 transition-all shadow-md flex items-center justify-center gap-1.5 mt-2">
+        <button type="submit" class="w-full p-3 soft-btn-yellow text-xs font-black flex items-center justify-center gap-1.5 mt-2">
           <i class="fas fa-paper-plane"></i>
           <span>공장에 보고하기</span>
         </button>
@@ -245,21 +287,35 @@
     </div>
   </main>
 
+  <!-- Bottom Navigation -->
+  <nav class="fixed bottom-3 left-0 right-0 max-w-md mx-auto px-4 z-50">
+    <div class="bg-white/90 backdrop-blur-md p-2 rounded-2xl border-2 border-yellow-300 shadow-lg flex justify-around">
+      <button onclick="switchTab('dash')" id="tab-dash-btn" class="flex-1 py-2.5 px-3 soft-btn-yellow text-xs font-black flex items-center justify-center gap-1.5">
+        <i class="fas fa-chart-line"></i>
+        <span>작업현황</span>
+      </button>
+      <div class="w-2"></div>
+      <button onclick="switchTab('form')" id="tab-form-btn" class="flex-1 py-2.5 px-3 soft-btn-sky text-xs font-black flex items-center justify-center gap-1.5">
+        <i class="fas fa-pen"></i>
+        <span>생산물 등록</span>
+      </button>
+    </div>
+  </nav>
+
   <script>
-    // ⚠️⚠️⚠️ 여기에 본인의 구글 Apps Script URL을 넣으세요! ⚠️⚠️⚠️
+    // ⚠️ 구글 Apps Script URL
     const API_URL = "https://script.google.com/macros/s/AKfycbyjWeblXl5MbTcFqKOHyt7URefzb8DK4CORO8M0zvnOeAGSbn23QFidh6VLcEdYPQ33/exec";
     const TARGET_GOAL = 100;
 
     const CATEGORIES = [
-      { name: '🪨 조약돌', groupName: '조약돌 조' },
-      { name: '☁️ 구름', groupName: '구름 조' },
-      { name: '🐤 오리', groupName: '오리 조' },
-      { name: '🍞 식빵', groupName: '식빵 조' },
-      { name: '🍳 계란후라이', groupName: '계란후라이 조' },
-      { name: '🪡 (번외)제봉', groupName: '제봉 조', note: '☁️ 구름 쫑매는 중' }
+      { name: '🪨 조약돌', groupName: '조약돌 작업실' },
+      { name: '☁️ 구름', groupName: '구름 작업실' },
+      { name: '🐤 오리', groupName: '오리 작업실' },
+      { name: '🍞 식빵', groupName: '식빵 작업실' },
+      { name: '🍳 계란후라이', groupName: '계란후라이 작업실' },
+      { name: '🪡 (번외)제봉', groupName: '제봉 작업실', note: '☁️ 구름 쫑매는 중' }
     ];
 
-    // 동물 캐릭터 이모티콘 20종
     const ANIMAL_AVATARS = [
       '🐱', '🐶', '🐰', '🐻', '🦊', 
       '🐼', '🐨', '🐯', '🐥', '🦁', 
@@ -324,48 +380,56 @@
         // 2. 카테고리별 요약 카드
         const catSummaryEl = document.getElementById('category-summary');
         catSummaryEl.innerHTML = CATEGORIES.map(cat => `
-          <div class="bg-amber-50/50 p-2 rounded-xl border border-yellow-100">
-            <div class="text-[11px] text-slate-500 font-bold mb-0.5">${cat.name}</div>
-            <div class="text-sm font-extrabold text-factory-deep-blue">${catTotals[cat.name] || 0}개</div>
+          <div class="soft-card-cream p-2 text-center border border-yellow-200">
+            <div class="text-[11px] text-slate-600 font-bold mb-0.5">${cat.name}</div>
+            <div class="text-sm font-black text-amber-700">${catTotals[cat.name] || 0}개</div>
           </div>
         `).join('');
 
-        // 3. 조별 작업자 캐릭터 배치 (동물 캐릭터 도트 픽셀 효과 반영)
+        // 3. 조별 작업자 현황 (Office Division Room View)
         const groupWorkersEl = document.getElementById('group-workers');
         groupWorkersEl.innerHTML = CATEGORIES.map(cat => {
           const workers = groupUserData[cat.name];
           const workerEntries = Object.entries(workers);
 
           return `
-            <div class="border-b border-yellow-100 pb-3 last:border-0">
-              <div class="flex justify-between items-center mb-1.5">
+            <div class="office-room p-3.5 space-y-2.5">
+              <!-- 작업실 룸 헤더 -->
+              <div class="flex justify-between items-center border-b border-amber-200/60 pb-2">
                 <div class="flex items-center gap-1.5">
-                  <span class="font-extrabold text-slate-700 text-xs">${cat.groupName}</span>
-                  ${cat.note ? `<span class="bg-sky-100 text-factory-deep-blue text-[10px] font-bold px-2 py-0.5 rounded-full border border-sky-200">${cat.note}</span>` : ''}
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="font-black text-slate-800 text-xs">${cat.groupName}</span>
+                  ${cat.note ? `<span class="bg-sky-100 text-sky-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-sky-200">${cat.note}</span>` : ''}
                 </div>
-                <span class="text-[10px] px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full font-bold">
-                  총 ${catTotals[cat.name]}개
+                <span class="text-[10px] px-2.5 py-0.5 bg-amber-200 text-amber-900 font-extrabold rounded-full">
+                  실적 ${catTotals[cat.name]}개
                 </span>
               </div>
-              <div class="flex flex-wrap gap-4 min-h-[55px] p-2.5 bg-amber-50/30 rounded-xl items-center border border-yellow-100">
+              
+              <!-- 미니 오피스 데스크 그리드 영역 -->
+              <div class="flex flex-wrap gap-2.5 min-h-[55px] p-2 items-center">
                 ${
                   workerEntries.length > 0 
                   ? workerEntries.map(([userName, count], idx) => `
-                    <div class="knitting-worker" style="animation-delay: ${idx * 0.15}s;">
-                      <!-- 머리 위 누적 개수 배지 -->
-                      <span class="bg-factory-blue text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full shadow-sm mb-0.5">
-                        +${count}개
-                      </span>
-                      <!-- 픽셀 효과가 추가된 동물 아이콘 조합 -->
-                      <div class="relative flex items-center justify-center">
-                        <span class="pixel-animal">${getUserAvatar(userName)}</span>
-                        <span class="knitting-hands">🧶🪡</span>
+                    <div class="desk-partition flex items-center gap-2">
+                      <div class="knitting-worker" style="animation-delay: ${idx * 0.15}s;">
+                        <!-- 머리 위 누적 개수 배지 -->
+                        <span class="bg-amber-400 text-amber-950 text-[9px] font-black px-1.5 py-0.2 rounded-full mb-0.5 shadow-2xs">
+                          +${count}
+                        </span>
+                        <!-- 아바타 -->
+                        <div class="relative flex items-center justify-center">
+                          <span class="pixel-animal">${getUserAvatar(userName)}</span>
+                          <span class="knitting-hands">🧶</span>
+                        </div>
                       </div>
-                      <!-- 작업원 이름 -->
-                      <span class="text-[10px] font-bold text-slate-600 mt-0.5">${userName}</span>
+                      <div class="flex flex-col pr-1">
+                        <span class="text-[10.5px] font-black text-slate-700">${userName}</span>
+                        <span class="text-[9px] font-bold text-amber-700">작업중..</span>
+                      </div>
                     </div>
                   `).join('')
-                  : '<span class="text-[11px] text-slate-400">아직 참여한 작업원이 없습니다 🐣</span>'
+                  : '<div class="w-full text-center py-2 text-[11px] text-slate-400 font-bold"><i class="fas fa-chair text-slate-300 mr-1"></i>아직 배치된 작업원이 없습니다</div>'
                 }
               </div>
             </div>
@@ -377,16 +441,16 @@
         const recentData = [...data].reverse().slice(0, 5);
         
         recentMessagesEl.innerHTML = recentData.map(row => `
-          <div class="p-2.5 bg-amber-50/40 rounded-xl border border-yellow-100 text-xs space-y-0.5">
+          <div class="p-2.5 bg-amber-50/50 rounded-xl border border-yellow-200 text-xs space-y-0.5">
             <div class="flex justify-between items-center font-bold text-slate-700">
               <span>${row.name || '무명 작업원'} <span class="font-normal text-slate-400">(${row.item || '작품'} +${row.count || 1}개)</span></span>
-              ${row.date ? `<span class="text-[10px] font-normal text-slate-400 bg-white/60 px-1.5 py-0.5 rounded-md border border-yellow-100">${row.date}</span>` : ''}
+              ${row.date ? `<span class="text-[10px] font-normal text-slate-400 bg-white px-1.5 py-0.5 rounded-md border border-yellow-200">${row.date}</span>` : ''}
             </div>
             <div class="text-slate-600 font-medium pt-0.5">
               "${row.message && row.message.trim() !== '' ? row.message : '오늘도 열심히 열뜨했어요! 🧶'}"
             </div>
           </div>
-        `).join('') || '<div class="text-[11px] text-slate-400 text-center py-2">등록된 메시지가 없습니다.</div>';
+        `).join('') || '<div class="text-xs text-slate-400 text-center py-2 font-bold">등록된 메시지가 없습니다.</div>';
 
       } catch (err) {
         console.error(err);
@@ -402,14 +466,14 @@
       if (tab === 'dash') {
         dashPage.style.display = 'block';
         formPage.style.display = 'none';
-        dashBtn.className = dashBtn.className.replace('bg-yellow-50 text-amber-800', 'bg-factory-blue text-white shadow-sm');
-        formBtn.className = formBtn.className.replace('bg-factory-blue text-white shadow-sm', 'bg-yellow-50 text-amber-800');
+        dashBtn.className = 'flex-1 py-2.5 px-3 soft-btn-yellow text-xs font-black flex items-center justify-center gap-1.5';
+        formBtn.className = 'flex-1 py-2.5 px-3 soft-btn-sky text-xs font-black flex items-center justify-center gap-1.5';
         loadData();
       } else {
         dashPage.style.display = 'none';
         formPage.style.display = 'block';
-        formBtn.className = formBtn.className.replace('bg-yellow-50 text-amber-800', 'bg-factory-blue text-white shadow-sm');
-        dashBtn.className = dashBtn.className.replace('bg-factory-blue text-white shadow-sm', 'bg-slate-100 text-slate-500');
+        formBtn.className = 'flex-1 py-2.5 px-3 soft-btn-yellow text-xs font-black flex items-center justify-center gap-1.5';
+        dashBtn.className = 'flex-1 py-2.5 px-3 soft-btn-sky text-xs font-black flex items-center justify-center gap-1.5';
       }
     }
 
@@ -447,7 +511,7 @@
       }
     });
 
-    // 초기에 데이터 로드
+    // 데이터 로드
     loadData();
   </script>
 </body>
