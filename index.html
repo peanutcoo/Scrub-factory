@@ -95,8 +95,7 @@
     /* 분담 작업실 (AI Office Room Tile) */
     .office-room {
       background-color: #fafaf9;
-      background-image: 
-        radial-gradient(#e7e5e4 1px, transparent 1px);
+      background-image: radial-gradient(#e7e5e4 1px, transparent 1px);
       background-size: 12px 12px;
       border: 2px solid #e7e5e4;
       border-radius: 16px;
@@ -108,7 +107,7 @@
       background: #ffffff;
       border: 1.5px solid #fde047;
       border-radius: 12px;
-      padding: 6px;
+      padding: 8px 10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     }
 
@@ -137,6 +136,35 @@
       position: absolute;
       bottom: 6px;
       right: -6px;
+    }
+
+    /* 말풍선 스타일 */
+    .speech-bubble {
+      position: relative;
+      background: #fffbeb;
+      border: 1.5px solid #facc15;
+      border-radius: 8px;
+      padding: 2px 6px;
+      font-size: 9.5px;
+      font-weight: 800;
+      color: #854d0e;
+      white-space: nowrap;
+      max-width: 110px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 4px 4px 0;
+      border-style: solid;
+      border-color: #facc15 transparent;
+      display: block;
+      width: 0;
     }
   </style>
 
@@ -275,8 +303,8 @@
                  class="w-full p-2.5 bg-amber-50/60 border border-yellow-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-300 text-base font-black text-slate-800">
         </div>
         <div class="space-y-1">
-          <label class="text-xs font-bold text-slate-600">한줄 응원 / 소감 메시지 (선택)</label>
-          <input type="text" id="message" placeholder="예: 오늘 5개 폭풍 생산 완료! 🔥"
+          <label class="text-xs font-bold text-slate-600">상태메시지 / 한줄 소감 (작업실에 표시됨)</label>
+          <input type="text" id="message" placeholder="예: 열뜨 중! / 5개 생산 완료! 🔥"
                  class="w-full p-2.5 bg-amber-50/60 border border-yellow-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-300 text-slate-800 text-xs font-bold">
         </div>
         <button type="submit" class="w-full p-3 soft-btn-yellow text-xs font-black flex items-center justify-center gap-1.5 mt-2">
@@ -334,14 +362,53 @@
       return userAvatarMap[name];
     }
 
+    // 날짜 표기 통일 함수 (YYYY. M. D. 오후/오전 H:mm:ss)
+    function formatStandardDate(dateInput) {
+      if (!dateInput) return '';
+      let d = new Date(dateInput);
+      
+      // 구글 시트 등에서 MM/DD HH:mm 형식 문자열로 바로 넘어온 경우 보완
+      if (isNaN(d.getTime()) && typeof dateInput === 'string') {
+        const parts = dateInput.split(' ');
+        if (parts.length >= 2) {
+          const currentYear = new Date().getFullYear();
+          d = new Date(`${currentYear}/${dateInput}`);
+        }
+      }
+      
+      if (isNaN(d.getTime())) return dateInput; // 실패시 원래 형태 반환
+
+      const year = d.getFullYear();
+      const month = d.getMonth() + 1;
+      const day = d.getDate();
+      let hours = d.getHours();
+      const minutes = String(d.getMinutes()).padStart(2, '0');
+      const seconds = String(d.getSeconds()).padStart(2, '0');
+      
+      const ampm = hours >= 12 ? '오후' : '오전';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0시는 12시로 변경
+
+      return `${year}. ${month}. ${day}. ${ampm} ${hours}:${minutes}:${seconds}`;
+    }
+
     async function loadData() {
       try {
         const res = await fetch(API_URL);
         const data = await res.json();
         
+        // 작업원별 '가장 최신 등록 메시지' 저장용
+        const latestUserMessage = {};
+
         data.forEach(row => {
           if (row.name && row.name.trim()) {
-            getUserAvatar(row.name.trim());
+            const nameClean = row.name.trim();
+            getUserAvatar(nameClean);
+            
+            // 등록된 최신 메시지가 있으면 지속 갱신
+            if (row.message && row.message.trim()) {
+              latestUserMessage[nameClean] = row.message.trim();
+            }
           }
         });
 
@@ -386,7 +453,7 @@
           </div>
         `).join('');
 
-        // 3. 조별 작업자 현황 (Office Division Room View)
+        // 3. 조별 작업자 현황 (최신 상태메시지 말풍선 적용)
         const groupWorkersEl = document.getElementById('group-workers');
         groupWorkersEl.innerHTML = CATEGORIES.map(cat => {
           const workers = groupUserData[cat.name];
@@ -410,25 +477,30 @@
               <div class="flex flex-wrap gap-2.5 min-h-[55px] p-2 items-center">
                 ${
                   workerEntries.length > 0 
-                  ? workerEntries.map(([userName, count], idx) => `
-                    <div class="desk-partition flex items-center gap-2">
-                      <div class="knitting-worker" style="animation-delay: ${idx * 0.15}s;">
-                        <!-- 머리 위 누적 개수 배지 -->
-                        <span class="bg-amber-400 text-amber-950 text-[9px] font-black px-1.5 py-0.2 rounded-full mb-0.5 shadow-2xs">
-                          +${count}
-                        </span>
-                        <!-- 아바타 -->
-                        <div class="relative flex items-center justify-center">
-                          <span class="pixel-animal">${getUserAvatar(userName)}</span>
-                          <span class="knitting-hands">🧶</span>
+                  ? workerEntries.map(([userName, count], idx) => {
+                    const statusMsg = latestUserMessage[userName] || '열뜨 중! 🧶';
+                    return `
+                      <div class="desk-partition flex items-center gap-2">
+                        <div class="knitting-worker" style="animation-delay: ${idx * 0.15}s;">
+                          <!-- 최신 상태메시지 말풍선 -->
+                          <div class="speech-bubble mb-0.5" title="${statusMsg}">
+                            ${statusMsg}
+                          </div>
+                          <!-- 아바타 -->
+                          <div class="relative flex items-center justify-center">
+                            <span class="pixel-animal">${getUserAvatar(userName)}</span>
+                            <span class="knitting-hands">🧶</span>
+                          </div>
+                        </div>
+                        <div class="flex flex-col pr-1">
+                          <span class="text-[10.5px] font-black text-slate-700">${userName}</span>
+                          <span class="text-[9.5px] font-black text-amber-600 bg-amber-100 px-1.5 py-0.2 rounded-full border border-amber-200 text-center mt-0.5">
+                            +${count}개
+                          </span>
                         </div>
                       </div>
-                      <div class="flex flex-col pr-1">
-                        <span class="text-[10.5px] font-black text-slate-700">${userName}</span>
-                        <span class="text-[9px] font-bold text-amber-700">작업중..</span>
-                      </div>
-                    </div>
-                  `).join('')
+                    `;
+                  }).join('')
                   : '<div class="w-full text-center py-2 text-[11px] text-slate-400 font-bold"><i class="fas fa-chair text-slate-300 mr-1"></i>아직 배치된 작업원이 없습니다</div>'
                 }
               </div>
@@ -436,7 +508,7 @@
           `;
         }).join('');
 
-        // 4. 최근 한줄 메시지 목록
+        // 4. 최근 한줄 메시지 목록 (통일된 날짜 포맷 적용)
         const recentMessagesEl = document.getElementById('recent-messages');
         const recentData = [...data].reverse().slice(0, 5);
         
@@ -444,7 +516,7 @@
           <div class="p-2.5 bg-amber-50/50 rounded-xl border border-yellow-200 text-xs space-y-0.5">
             <div class="flex justify-between items-center font-bold text-slate-700">
               <span>${row.name || '무명 작업원'} <span class="font-normal text-slate-400">(${row.item || '작품'} +${row.count || 1}개)</span></span>
-              ${row.date ? `<span class="text-[10px] font-normal text-slate-400 bg-white px-1.5 py-0.5 rounded-md border border-yellow-200">${row.date}</span>` : ''}
+              ${row.date ? `<span class="text-[9.5px] font-bold text-slate-500 bg-white px-1.5 py-0.5 rounded-md border border-yellow-200">${formatStandardDate(row.date)}</span>` : ''}
             </div>
             <div class="text-slate-600 font-medium pt-0.5">
               "${row.message && row.message.trim() !== '' ? row.message : '오늘도 열심히 열뜨했어요! 🧶'}"
