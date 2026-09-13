@@ -367,7 +367,6 @@
       if (!dateInput) return '';
       let d = new Date(dateInput);
       
-      // 구글 시트 등에서 MM/DD HH:mm 형식 문자열로 바로 넘어온 경우 보완
       if (isNaN(d.getTime()) && typeof dateInput === 'string') {
         const parts = dateInput.split(' ');
         if (parts.length >= 2) {
@@ -376,7 +375,7 @@
         }
       }
       
-      if (isNaN(d.getTime())) return dateInput; // 실패시 원래 형태 반환
+      if (isNaN(d.getTime())) return dateInput;
 
       const year = d.getFullYear();
       const month = d.getMonth() + 1;
@@ -387,7 +386,7 @@
       
       const ampm = hours >= 12 ? '오후' : '오전';
       hours = hours % 12;
-      hours = hours ? hours : 12; // 0시는 12시로 변경
+      hours = hours ? hours : 12;
 
       return `${year}. ${month}. ${day}. ${ampm} ${hours}:${minutes}:${seconds}`;
     }
@@ -397,7 +396,6 @@
         const res = await fetch(API_URL);
         const data = await res.json();
         
-        // 작업원별 '가장 최신 등록 메시지' 저장용
         const latestUserMessage = {};
 
         data.forEach(row => {
@@ -405,7 +403,6 @@
             const nameClean = row.name.trim();
             getUserAvatar(nameClean);
             
-            // 등록된 최신 메시지가 있으면 지속 갱신
             if (row.message && row.message.trim()) {
               latestUserMessage[nameClean] = row.message.trim();
             }
@@ -453,7 +450,7 @@
           </div>
         `).join('');
 
-        // 3. 조별 작업자 현황 (최신 상태메시지 말풍선 적용)
+        // 3. 조별 작업자 현황 (생산량 뱃지 및 상태메시지 보완)
         const groupWorkersEl = document.getElementById('group-workers');
         groupWorkersEl.innerHTML = CATEGORIES.map(cat => {
           const workers = groupUserData[cat.name];
@@ -492,10 +489,11 @@
                             <span class="knitting-hands">🧶</span>
                           </div>
                         </div>
-                        <div class="flex flex-col pr-1">
-                          <span class="text-[10.5px] font-black text-slate-700">${userName}</span>
-                          <span class="text-[9.5px] font-black text-amber-600 bg-amber-100 px-1.5 py-0.2 rounded-full border border-amber-200 text-center mt-0.5">
-                            +${count}개
+                        <div class="flex flex-col pr-1 justify-center">
+                          <span class="text-[11px] font-black text-slate-800 mb-0.5">${userName}</span>
+                          <!-- 누적 생산량 배지 -->
+                          <span class="text-[9.5px] font-black text-amber-800 bg-amber-200 px-2 py-0.5 rounded-full border border-yellow-300 text-center">
+                            총 ${count}개
                           </span>
                         </div>
                       </div>
@@ -508,7 +506,7 @@
           `;
         }).join('');
 
-        // 4. 최근 한줄 메시지 목록 (통일된 날짜 포맷 적용)
+        // 4. 최근 한줄 메시지 목록
         const recentMessagesEl = document.getElementById('recent-messages');
         const recentData = [...data].reverse().slice(0, 5);
         
