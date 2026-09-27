@@ -3,140 +3,838 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#fffaf0">
   <title>🧶 두코두코 수세미 공장 🏭</title>
-  <!-- Tailwind CSS & FontAwesome Icons -->
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
-  <!-- 나눔스퀘어라운드 폰트 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.css">
 
   <style>
+    :root {
+      --bg: #fffaf0;
+      --paper: #ffffff;
+      --ink: #334155;
+      --muted: #94a3b8;
+      --line: #f4e6b5;
+      --yellow: #facc15;
+      --yellow-deep: #b7791f;
+      --yellow-pale: #fff7cc;
+      --sky: #38bdf8;
+      --sky-pale: #eaf7ff;
+      --green-pale: #ecfdf5;
+      --green: #10b981;
+      --shadow: 0 10px 28px rgba(148, 115, 35, 0.09);
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      min-height: 100%;
+      background: #f4f1e8;
+    }
     body {
+      width: 100%;
+      min-width: 0;
+      margin: 0 auto !important;
+      margin-inline: auto !important;
+      min-height: 100vh;
+      max-width: 440px;
+      padding: 14px 14px 108px;
       font-family: 'NanumSquareRound', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #fefce8; /* 따뜻한 연노랑 / 크림 테마 */
-      color: #334155;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(250, 204, 21, 0.11), transparent 24%),
+        radial-gradient(circle at 100% 10%, rgba(56, 189, 248, 0.09), transparent 24%),
+        var(--bg);
+      color: var(--ink);
       -webkit-tap-highlight-color: transparent;
-      font-size: 0.9rem;
-      line-height: 1.4;
     }
 
-    /* 소프트 아케이드 오피스 카통 스타일 */
-    .soft-card {
-      background-color: #ffffff;
-      border: 2px solid #fde047;
-      border-radius: 20px;
-      box-shadow: 0 4px 14px rgba(250, 204, 21, 0.15), inset 0 0 0 2px #fef9c3;
+    @media (min-width: 520px) {
+      body {
+        box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.10), 0 18px 60px rgba(71, 85, 105, 0.10);
+      }
     }
 
-    .soft-card-cream {
-      background-color: #fffbeb;
-      border: 2px solid #fef08a;
-      border-radius: 16px;
+    button, input, select { font: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+
+    .app-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(239, 215, 136, 0.72);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
     }
 
-    .soft-btn-yellow {
-      background-color: #facc15;
-      color: #713f12;
-      border: 2px solid #eab308;
-      border-radius: 14px;
-      box-shadow: 0 3px 0px #ca8a04;
-      font-weight: 800;
-      transition: all 0.1s ease;
-    }
-    .soft-btn-yellow:active {
-      transform: translateY(2px);
-      box-shadow: 0 1px 0px #ca8a04;
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: 900;
+      color: #475569;
+      letter-spacing: -0.02em;
     }
 
-    .soft-btn-sky {
-      background-color: #e0f2fe;
-      color: #0369a1;
-      border: 2px solid #7dd3fc;
-      border-radius: 14px;
-      box-shadow: 0 3px 0px #38bdf8;
-      font-weight: 800;
-      transition: all 0.1s ease;
-    }
-    .soft-btn-sky:active {
-      transform: translateY(2px);
-      box-shadow: 0 1px 0px #38bdf8;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(254, 249, 195, 0.9);
+      border: 1px solid #fde68a;
+      color: #92400e;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
     }
 
-    /* 상단 벨트 애니메이션 */
-    .factory-window {
-      height: 100px;
-      background: linear-gradient(135deg, #fef9c3, #e0f2fe);
+    .hero {
       position: relative;
       overflow: hidden;
-      border: 2px solid #fde047;
-      border-radius: 20px;
-      box-shadow: inset 0 0 12px rgba(250, 204, 21, 0.2);
+      min-height: 128px;
+      padding: 17px;
+      background: linear-gradient(135deg, #fffef8 0%, #fff8d7 55%, #edf9ff 100%);
+      border: 1px solid #f5df91;
+      border-radius: 25px;
+      box-shadow: var(--shadow);
     }
 
-    .gear {
-      position: absolute; color: #38bdf8;
-      animation: gear-spin 6s linear infinite;
-    }
-    @keyframes gear-spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .item-conveyor {
-      position: absolute; bottom: 10px; left: -60px; font-size: 1.8rem;
-      animation: conveyor-move 7s linear infinite;
-    }
-    @keyframes conveyor-move {
-      0% { left: -60px; }
-      100% { left: 110%; }
-    }
-
-    /* 분담 작업실 (AI Office Room Tile) */
-    .office-room {
-      background-color: #fafaf9;
-      background-image: radial-gradient(#e7e5e4 1px, transparent 1px);
-      background-size: 12px 12px;
-      border: 2px solid #e7e5e4;
-      border-radius: 16px;
-      position: relative;
-    }
-
-    /* 책상 파티션 레이아웃 */
-    .desk-partition {
-      background: #ffffff;
-      border: 1.5px solid #fde047;
-      border-radius: 12px;
-      padding: 8px 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-    }
-
-    .knitting-worker {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      animation: knit-work 1.2s ease-in-out infinite alternate;
-    }
-    @keyframes knit-work {
-      0% { transform: translateY(0) scale(0.98); }
-      50% { transform: translateY(-3px) scale(1.02); }
-      100% { transform: translateY(-4px) scale(1); }
-    }
-    
-    .pixel-animal {
-      font-size: 1.7rem;
-      display: inline-block;
-      line-height: 1;
-      filter: drop-shadow(0 2px 4px rgba(250, 204, 21, 0.3));
-    }
-
-    .knitting-hands {
-      font-size: 0.75rem;
+    .hero::before {
+      content: '';
       position: absolute;
-      bottom: 2px;
-      right: -6px;
+      width: 150px;
+      height: 150px;
+      right: -62px;
+      top: -72px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.11);
     }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 95px;
+      height: 95px;
+      left: -43px;
+      bottom: -54px;
+      border-radius: 999px;
+      background: rgba(250, 204, 21, 0.16);
+    }
+
+    .hero-copy { position: relative; z-index: 2; }
+    .hero-title {
+      margin-top: 7px;
+      font-size: 22px;
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      color: #263244;
+    }
+    .hero-sub {
+      margin-top: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #78879b;
+    }
+
+    .mini-factory {
+      position: absolute;
+      z-index: 2;
+      right: 13px;
+      bottom: 13px;
+      width: 116px;
+      height: 66px;
+      border-radius: 18px;
+      border: 1px solid rgba(234, 179, 8, 0.22);
+      background: rgba(255,255,255,.73);
+      overflow: hidden;
+      box-shadow: inset 0 0 18px rgba(255, 227, 96, .18);
+    }
+
+    .factory-floor {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 12px;
+      height: 5px;
+      background: repeating-linear-gradient(90deg, #64748b 0 10px, #cbd5e1 10px 15px);
+      opacity: .72;
+    }
+    .gear {
+      position: absolute;
+      color: #7dd3fc;
+      animation: gear-spin 7s linear infinite;
+    }
+    @keyframes gear-spin { to { transform: rotate(360deg); } }
+    .conveyor-item {
+      position: absolute;
+      bottom: 19px;
+      left: -28px;
+      font-size: 19px;
+      animation: conveyor 7.6s linear infinite;
+    }
+    @keyframes conveyor { from { left: -28px; } to { left: 120px; } }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 99px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,.10);
+    }
+
+    .goal-number {
+      font-size: 35px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      color: #d08b00;
+    }
+
+    .metric-box {
+      padding: 10px 9px;
+      background: #fffef8;
+      border: 1px solid #f7e8b7;
+      border-radius: 14px;
+      text-align: center;
+    }
+    .metric-value { font-size: 14px; font-weight: 900; color: #475569; }
+    .metric-label { margin-top: 2px; font-size: 9px; font-weight: 800; color: #a1a9b7; }
+
+    .progress-track {
+      height: 13px;
+      padding: 2px;
+      background: #fff7d6;
+      border: 1px solid #f6df8e;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #facc15 0%, #f6c84b 58%, #5ac8fa 100%);
+      transition: width .65s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .category-card {
+      min-width: 0;
+      padding: 10px 7px 9px;
+      background: #fffdf8;
+      border: 1px solid #f6e8b9;
+      border-radius: 16px;
+      text-align: center;
+      transition: transform .15s ease;
+    }
+    .category-card:active { transform: scale(.98); }
+    .category-icon { font-size: 23px; line-height: 1.1; }
+    .category-name {
+      margin-top: 5px;
+      min-height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      color: #64748b;
+      word-break: keep-all;
+    }
+    .category-count { font-size: 15px; font-weight: 900; color: #b7791f; }
+
+    .office-room {
+      position: relative;
+      padding: 13px;
+      background-color: #fcfcfa;
+      background-image: radial-gradient(#e9e6dd 1px, transparent 1px);
+      background-size: 14px 14px;
+      border: 1px solid #eee7d5;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .office-room + .office-room { margin-top: 10px; }
+    .room-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 9px;
+      border-bottom: 1px dashed #eadfbf;
+    }
+    .room-name { font-size: 12px; font-weight: 900; color: #39485c; }
+    .room-note {
+      display: inline-flex;
+      margin-top: 4px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: var(--sky-pale);
+      color: #0284c7;
+      border: 1px solid #bae6fd;
+      font-size: 9px;
+      font-weight: 900;
+    }
+    .room-total {
+      flex: 0 0 auto;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #fff2b2;
+      color: #8b5e00;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .worker-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      padding-top: 10px;
+    }
+    .worker-card {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      background: rgba(255,255,255,.94);
+      border: 1px solid #f0e2b5;
+      border-radius: 13px;
+      box-shadow: 0 2px 7px rgba(90,80,55,.035);
+    }
+    .worker-avatar {
+      position: relative;
+      flex: 0 0 33px;
+      width: 33px;
+      height: 33px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: #fff8d7;
+      font-size: 21px;
+      animation: worker-bob 1.8s ease-in-out infinite alternate;
+    }
+    @keyframes worker-bob { to { transform: translateY(-2px); } }
+    .worker-yarn { position: absolute; right: -4px; bottom: -1px; font-size: 10px; }
+    .worker-info { min-width: 0; }
+    .worker-name {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 10px;
+      font-weight: 900;
+      color: #475569;
+    }
+    .worker-count { margin-top: 2px; font-size: 9px; font-weight: 900; color: #b7791f; }
+
+    .message-list { max-height: 350px; overflow-y: auto; padding-right: 1px; }
+    .message-list::-webkit-scrollbar { width: 4px; }
+    .message-list::-webkit-scrollbar-thumb { background: #ead999; border-radius: 999px; }
+    .message-card {
+      padding: 10px 11px;
+      border: 1px solid #f3e6bd;
+      border-radius: 15px;
+      background: #fffdf8;
+    }
+    .message-card + .message-card { margin-top: 7px; }
+    .message-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .message-person { min-width: 0; font-size: 11px; font-weight: 900; color: #475569; }
+    .message-production { margin-top: 2px; font-size: 9px; font-weight: 700; color: #94a3b8; }
+    .message-time { flex: 0 0 auto; font-size: 8.5px; font-weight: 800; color: #9aa5b5; white-space: nowrap; }
+    .message-body { margin-top: 7px; font-size: 10.5px; line-height: 1.45; font-weight: 700; color: #657487; }
+
+    .item-picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+    .item-option {
+      min-height: 74px;
+      padding: 9px 5px;
+      border: 1.5px solid #eee5ce;
+      border-radius: 15px;
+      background: #fffdfa;
+      color: #64748b;
+      font-size: 9.5px;
+      font-weight: 900;
+      text-align: center;
+      transition: .15s ease;
+    }
+    .item-option .emoji { display: block; margin-bottom: 6px; font-size: 24px; }
+    .item-option.selected {
+      background: #fff7c7;
+      border-color: #f3c51d;
+      color: #7c5600;
+      box-shadow: inset 0 0 0 1px rgba(250,204,21,.22);
+      transform: translateY(-1px);
+    }
+
+    .field-label { display: block; margin-bottom: 5px; font-size: 11px; font-weight: 900; color: #64748b; }
+    .field {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid #eadfbf;
+      border-radius: 14px;
+      outline: none;
+      background: #fffdf8;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 800;
+      transition: .15s ease;
+    }
+    .field:focus { border-color: #efc739; box-shadow: 0 0 0 3px rgba(250,204,21,.14); background: #fff; }
+
+    .submit-btn {
+      width: 100%;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 3px;
+      border: 0;
+      border-radius: 15px;
+      background: linear-gradient(180deg, #fbd32f 0%, #f5c817 100%);
+      color: #6f4b00;
+      box-shadow: 0 4px 0 #d9aa05, 0 7px 13px rgba(217,170,5,.13);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .submit-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #d9aa05; }
+
+    .nav-shell {
+      position: fixed;
+      z-index: 50;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      width: calc(100% - 24px);
+      max-width: 416px;
+      padding: 6px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      border: 1px solid rgba(232, 215, 160, .9);
+      border-radius: 20px;
+      background: rgba(255,255,255,.90);
+      box-shadow: 0 12px 32px rgba(75, 64, 33, .17);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .nav-btn {
+      min-height: 48px;
+      border: 0;
+      border-radius: 15px;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 900;
+      transition: .15s ease;
+    }
+    .nav-btn i { margin-right: 5px; }
+    .nav-btn.active {
+      background: #fff4ae;
+      color: #845b00;
+      box-shadow: inset 0 0 0 1px #f5d656;
+    }
+
+    .skeleton { animation: pulse 1.3s ease-in-out infinite alternate; }
+    @keyframes pulse { from { opacity: .45; } to { opacity: .9; } }
+
+    .toast {
+      position: fixed;
+      z-index: 80;
+      top: 18px;
+      left: 50%;
+      transform: translate(-50%, -18px);
+      width: calc(100% - 32px);
+      max-width: 408px;
+      padding: 11px 13px;
+      border-radius: 15px;
+      background: rgba(30,41,59,.94);
+      color: #fff;
+      box-shadow: 0 10px 28px rgba(15,23,42,.22);
+      font-size: 11px;
+      font-weight: 800;
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s ease;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+
+    /* =========================================================
+       AUTUMN PIXEL EDITION
+       - 기존 모바일 앱/공장 구조 유지
+       - 픽셀 UI는 장식/경계/라벨에만 제한적으로 적용
+       ========================================================= */
+    :root {
+      --bg: #fff8e8;
+      --paper: #fffef8;
+      --ink: #4d4339;
+      --muted: #9b8c79;
+      --line: #efd8a8;
+      --yellow: #f2b93b;
+      --yellow-deep: #9a5b24;
+      --yellow-pale: #fff0b8;
+      --sky: #8db9c7;
+      --sky-pale: #edf8fb;
+      --green-pale: #f1f4df;
+      --green: #8aa05d;
+      --autumn-orange: #e27b35;
+      --autumn-brown: #8a5b3a;
+      --autumn-sage: #9aaa72;
+      --shadow: 0 10px 26px rgba(166, 111, 38, .10);
+    }
+
+    html { background: #f3ead8; }
+
+    body {
+      background:
+        linear-gradient(rgba(120,88,57,.026) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120,88,57,.026) 1px, transparent 1px),
+        radial-gradient(circle at 10% 0%, rgba(255,190,63,.16), transparent 28%),
+        radial-gradient(circle at 100% 8%, rgba(237,124,48,.10), transparent 25%),
+        var(--bg);
+      background-size: 12px 12px, 12px 12px, auto, auto, auto;
+    }
+
+    .app-card {
+      background: rgba(255,254,248,.97);
+      border: 1px solid #ecd2a2;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .app-card::before {
+      content: '';
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      left: 8px;
+      top: 8px;
+      background: #efbd63;
+      box-shadow: 6px 0 #efbd63, 0 6px #efbd63;
+      opacity: .38;
+      pointer-events: none;
+    }
+
+    .section-title { color: #5e5146; }
+    .section-title i { color: var(--autumn-orange) !important; }
+
+    .eyebrow {
+      border-radius: 5px;
+      background: #fff0b9;
+      border: 1px solid #e4b65a;
+      color: #8a5425;
+      box-shadow: 2px 2px 0 rgba(118,81,58,.10);
+      letter-spacing: .08em;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 1px;
+      background: #8fae62;
+      box-shadow: 0 0 0 2px rgba(126,150,105,.13);
+    }
+
+    .hero {
+      min-height: 132px;
+      background:
+        linear-gradient(rgba(255,255,255,.18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.18) 1px, transparent 1px),
+        linear-gradient(135deg, #fffef6 0%, #ffe9ad 52%, #f8d5ad 100%);
+      background-size: 10px 10px, 10px 10px, auto;
+      border: 1px solid #e7be73;
+      border-radius: 20px;
+      box-shadow: 0 11px 28px rgba(107,75,48,.10);
+    }
+
+    .hero::before {
+      width: 90px;
+      height: 90px;
+      right: -22px;
+      top: -30px;
+      border-radius: 18px;
+      transform: rotate(12deg);
+      background: rgba(245,152,66,.16);
+    }
+
+    .hero::after {
+      width: 62px;
+      height: 62px;
+      left: -27px;
+      bottom: -31px;
+      border-radius: 13px;
+      transform: rotate(-10deg);
+      background: rgba(154,170,95,.16);
+    }
+
+    .hero-title { color: #5b4635; text-shadow: 1px 1px 0 rgba(255,255,255,.6); }
+    .hero-sub { color: #8f725d; }
+
+    .mini-factory {
+      width: 116px;
+      height: 67px;
+      border-radius: 8px;
+      border: 2px solid #d9ad64;
+      background:
+        linear-gradient(rgba(117,81,58,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(117,81,58,.055) 1px, transparent 1px),
+        rgba(255,253,244,.94);
+      background-size: 8px 8px;
+      box-shadow: 4px 4px 0 rgba(118,81,58,.08), inset 0 0 0 2px rgba(255,255,255,.62);
+    }
+
+    .factory-floor {
+      height: 6px;
+      background: repeating-linear-gradient(90deg, #8a5b3a 0 8px, #deb76f 8px 13px);
+      opacity: .72;
+    }
+    .gear { color: #8da0a6; }
+
+    .goal-number { color: #d56d2f; }
+    .progress-track { background: #fff0ca; border-color: #ecc978; }
+    .progress-fill { background: linear-gradient(90deg, #f3bd35 0%, #ee8b3a 58%, #9aae68 100%); }
+
+    .metric-box {
+      background: #fff9ea;
+      border-color: #efd8a9;
+      border-radius: 10px;
+      box-shadow: inset 0 -2px 0 rgba(118,81,58,.035);
+    }
+    .metric-value { color: #67574b; }
+    .metric-label { color: #a09387; }
+
+    .category-card {
+      position: relative;
+      padding: 7px 5px 6px;
+      background: #fffdf5;
+      border: 1px solid #efd3a0;
+      border-radius: 10px;
+      box-shadow: 2px 2px 0 rgba(118,81,58,.055);
+    }
+    .category-card:nth-child(3n+1) { background: #fff5d9; }
+    .category-card:nth-child(3n+2) { background: #fff9e8; }
+    .category-card:nth-child(3n) { background: #fff1df; }
+    .category-card::after {
+      content: '';
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      width: 3px;
+      height: 3px;
+      background: #e4b05b;
+      box-shadow: 4px 0 #caa67a, 0 4px #caa67a;
+      opacity: .5;
+    }
+    .category-icon { font-size: 20px; line-height: 1; filter: saturate(1.08); }
+    .category-name { margin-top: 3px; min-height: 22px; font-size: 9px; line-height: 1.15; color: #74675c; }
+    .category-count {
+      margin-top: 2px;
+      color: #cf6d2f;
+      font-size: 13px;
+      line-height: 1.1;
+    }
+
+    .office-room {
+      background-color: #fff8e9;
+      background-image:
+        linear-gradient(rgba(116,90,66,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(116,90,66,.04) 1px, transparent 1px);
+      background-size: 12px 12px;
+      border-color: #ead3aa;
+      border-radius: 12px;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.45);
+    }
+    .room-top { border-bottom-color: #d8c5a9; }
+    .room-name { color: #594c42; }
+    .room-note {
+      border-radius: 5px;
+      background: #eef4df;
+      color: #6b7f6a;
+      border-color: #cdd9cd;
+    }
+    .room-total {
+      border-radius: 5px;
+      background: #ffe3a0;
+      color: #704a2e;
+      box-shadow: 2px 2px 0 rgba(118,81,58,.07);
+    }
+
+    .worker-card {
+      background: #fffef8;
+      border-color: #e1d1b9;
+      border-radius: 8px;
+      box-shadow: 2px 2px 0 rgba(118,81,58,.045);
+    }
+    .worker-avatar {
+      border-radius: 7px;
+      background: #fff0c8;
+      box-shadow: inset 0 0 0 1px rgba(118,81,58,.08);
+    }
+
+    .message-list > div {
+      border-radius: 9px !important;
+    }
+
+    .field {
+      border-radius: 9px !important;
+      background: #fffdf5 !important;
+      border-color: #dfcdb1 !important;
+    }
+
+    .item-option {
+      border-radius: 9px !important;
+      background: #fffdf5 !important;
+      border-color: #dfcdb1 !important;
+    }
+    .item-option.selected {
+      background: #ffe7aa !important;
+      border-color: #bd834d !important;
+      box-shadow: 3px 3px 0 rgba(118,81,58,.08) !important;
+    }
+
+    .submit-btn {
+      border-radius: 9px !important;
+      background: linear-gradient(180deg, #ef9a45, #df7335) !important;
+      border-color: #c8612e !important;
+      color: #fffaf1 !important;
+      box-shadow: 0 3px 0 #8d4e30 !important;
+    }
+
+    nav > div {
+      background: rgba(255,253,245,.97) !important;
+      border-color: #e7cd9c !important;
+      border-radius: 14px !important;
+      box-shadow: 0 10px 25px rgba(89,67,49,.12) !important;
+    }
+
+    #tab-dash-btn, #tab-form-btn { border-radius: 8px !important; }
+
+    /* 밝은 가을 장식 */
+    .autumn-sprinkles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .autumn-sprinkles span {
+      position: absolute;
+      filter: drop-shadow(0 2px 2px rgba(131,79,29,.08));
+      animation: leaf-bob 3.8s ease-in-out infinite alternate;
+    }
+    .autumn-sprinkles .leaf-a { top: 10px; right: 13px; font-size: 17px; transform: rotate(13deg); }
+    .autumn-sprinkles .leaf-b { top: 48px; right: 112px; font-size: 14px; animation-delay: .8s; }
+    .autumn-sprinkles .chestnut { bottom: 9px; left: 14px; font-size: 15px; animation-delay: 1.4s; }
+    .autumn-sprinkles .ginkgo { bottom: 8px; right: 91px; font-size: 15px; animation-delay: .35s; }
+    @keyframes leaf-bob {
+      from { translate: 0 0; rotate: -3deg; }
+      to { translate: 0 -3px; rotate: 4deg; }
+    }
+
+    .section-title::after {
+      content: '🍁';
+      margin-left: auto;
+      font-size: 12px;
+      opacity: .72;
+      filter: saturate(1.15);
+    }
+    .category-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .category-bar-row {
+      display: grid;
+      grid-template-columns: 92px 1fr 40px;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+    .category-bar-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+      font-size: 10px;
+      font-weight: 900;
+      color: #66564a;
+      white-space: nowrap;
+    }
+    .category-bar-label .emoji {
+      width: 20px;
+      text-align: center;
+      font-size: 16px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .category-bar-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .category-bar-track {
+      position: relative;
+      height: 12px;
+      overflow: hidden;
+      border: 1px solid #f1dfae;
+      border-radius: 4px;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.62) 0 7px, rgba(250,204,21,.06) 7px 8px),
+        #fffaf0;
+    }
+    .category-bar-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      min-width: 0;
+      border-radius: 3px;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.13) 0 8px, rgba(255,255,255,0) 8px 10px),
+        linear-gradient(90deg, #facc15 0%, #f4a340 70%, #e98a3a 100%);
+      box-shadow: inset 0 -1px 0 rgba(120,72,20,.10);
+      transition: width .65s cubic-bezier(.2,.8,.2,1);
+    }
+    .category-bar-count {
+      text-align: right;
+      font-size: 11px;
+      font-weight: 900;
+      color: #a96916;
+      white-space: nowrap;
+    }
+    .category-chart-note {
+      margin-top: 8px;
+      text-align: right;
+      font-size: 8.5px;
+      font-weight: 800;
+      color: #b1a08d;
+    }
+
+    .category-card:nth-child(1)::before,
+    .category-card:nth-child(4)::before,
+    .category-card:nth-child(7)::before {
+      content: '🍂';
+      position: absolute;
+      left: 5px;
+      bottom: 4px;
+      font-size: 9px;
+      opacity: .45;
+    }
+    .office-room::after {
+      content: '🌰 ･ 🍁';
+      position: absolute;
+      right: 8px;
+      bottom: 5px;
+      font-size: 8px;
+      opacity: .26;
+      letter-spacing: 1px;
+      pointer-events: none;
+    }
+    .office-room { position: relative; overflow: hidden; }
+
+    @media (min-width: 520px) {
+      body {
+        box-shadow: 0 0 0 1px rgba(118,81,58,.10), 0 20px 65px rgba(77,55,39,.13);
+      }
+    }
+
   </style>
 
   <script>
@@ -145,188 +843,160 @@
         extend: {
           colors: {
             'factory-yellow': '#fde047',
-            'factory-dark-yellow': '#ca8a04',
-            'factory-cream': '#fffbeb',
-            'factory-sky': '#38bdf8',
+            'factory-sky': '#38bdf8'
           }
         }
       }
     }
   </script>
 </head>
-<body class="max-w-md mx-auto p-4 pb-28">
+<body>
 
-  <!-- Office Header Container -->
-  <header class="text-center mb-4 bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border-2 border-yellow-300 shadow-sm">
-    <div class="inline-block px-3 py-0.5 bg-yellow-100 text-amber-800 text-[11px] font-black rounded-full mb-1 border border-yellow-200">
-      💛 WORK DIVISION • LIVE OFFICE 💛
+  <div id="toast" class="toast"></div>
+
+  <header class="hero mb-3.5">
+    <div class="autumn-sprinkles" aria-hidden="true">
+      <span class="leaf-a">🍁</span>
+      <span class="leaf-b">🍂</span>
+      <span class="chestnut">🌰</span>
+      <span class="ginkgo">💛</span>
     </div>
-    <h1 class="text-xl font-black text-slate-800 flex items-center justify-center gap-2">
-      <i class="fas fa-industry text-amber-400"></i>
-      두코두코 수세미 공장
-    </h1>
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="status-dot"></span> Scrub Factory</div>
+      <h1 class="hero-title">두코두코<br>수세미 공장 🧶</h1>
+      <p class="hero-sub">노랗고 포근한 가을에도 한 코 한 코 생산 중! 🍁🌰</p>
+    </div>
+
+    <div class="mini-factory" aria-hidden="true">
+      <i class="fas fa-cog gear text-[22px]" style="top:8px; right:15px;"></i>
+      <i class="fas fa-cog gear text-[14px]" style="top:28px; right:39px; color:#facc15; animation-duration:4s; animation-direction:reverse;"></i>
+      <div class="factory-floor"></div>
+      <span class="conveyor-item" style="animation-delay:0s">🪨</span>
+      <span class="conveyor-item" style="animation-delay:1.1s">☁️</span>
+      <span class="conveyor-item" style="animation-delay:2.2s">🐤</span>
+      <span class="conveyor-item" style="animation-delay:3.3s">🍞</span>
+      <span class="conveyor-item" style="animation-delay:4.4s">🍳</span>
+      <span class="conveyor-item" style="animation-delay:5.5s">🍋</span>
+      <span class="conveyor-item" style="animation-delay:6.6s">🪡</span>
+    </div>
   </header>
 
-  <!-- Factory Conveyor Animation Window -->
-  <div class="factory-window mb-4">
-    <i class="fas fa-cog gear text-3xl" style="top: 12px; left: 18px;"></i>
-    <i class="fas fa-cog gear text-xl" style="top: 45px; left: 50px; animation-duration: 3s; animation-direction: reverse; color: #facc15;"></i>
-    
-    <!-- Moving Items -->
-    <span class="item-conveyor" style="animation-delay: 0s;">🪨</span>
-    <span class="item-conveyor" style="animation-delay: 1.2s;">☁️</span>
-    <span class="item-conveyor" style="animation-delay: 2.4s;">🐤</span>
-    <span class="item-conveyor" style="animation-delay: 3.6s;">🍞</span>
-    <span class="item-conveyor" style="animation-delay: 4.8s;">🍳</span>
-    <span class="item-conveyor" style="animation-delay: 6.0s;">🪡</span>
-  </div>
-
-  <!-- Page 1: 작업현황 (Dashboard) -->
-  <main id="page-dash" class="space-y-4">
-    
-    <!-- Overall Goal Card -->
-    <div class="soft-card p-4">
-      <div class="flex justify-between items-center mb-2">
-        <h3 class="text-sm font-black text-slate-700 flex items-center gap-1.5">
-          <i class="fas fa-bullseye text-amber-400"></i>
-          전체 목표 달성률
-        </h3>
-        <span class="text-xs font-black text-amber-900 bg-amber-100 px-2.5 py-0.5 rounded-full border border-yellow-300" id="progress-percent">0%</span>
-      </div>
-      <div class="flex justify-between items-end mb-2">
-        <div class="text-xs font-bold text-slate-600">현재 <strong id="total-count" class="text-xl font-black text-amber-600">0</strong> 개 완료!</div>
-        <div class="text-[11px] font-bold text-slate-400">목표: <span id="target-count">100</span>개</div>
-      </div>
-      <!-- Progress Bar -->
-      <div class="w-full h-4 bg-amber-50 rounded-full overflow-hidden border border-yellow-200 p-0.5">
-        <div id="progress-fill" class="h-full bg-gradient-to-r from-yellow-300 to-sky-400 rounded-full transition-all duration-700" style="width: 0%"></div>
-      </div>
-      <p class="text-[10px] font-bold text-slate-400 mt-2 text-right">* 구름 조 실적은 제봉 완료분으로 합산 반영 ☁️</p>
-    </div>
-
-    <!-- Category Summary Card -->
-    <div class="soft-card p-4">
-      <h3 class="text-sm font-black text-slate-700 mb-3 flex items-center gap-1.5">
-        <i class="fas fa-boxes-stacked text-sky-400"></i>
-        작품별 생산 현황
-      </h3>
-      <div id="category-summary" class="grid grid-cols-3 gap-2 text-center">
-        <!-- JS로 생성 -->
-      </div>
-    </div>
-
-    <!-- Group Workers Section (AI Division Office Rooms) -->
-    <div class="soft-card p-4 space-y-4">
-      <div class="flex justify-between items-center">
-        <h3 class="text-sm font-black text-slate-700 flex items-center gap-1.5">
-          <i class="fas fa-building text-amber-400"></i>
-          조별 작업실 분담 현황 (OFFICE ROOMS)
-        </h3>
-        <span class="text-[10px] bg-slate-100 text-slate-500 font-bold px-2 py-0.5 rounded-md">6개 작업실</span>
+  <main id="page-dash" class="space-y-3.5">
+    <section class="app-card p-4">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <div class="section-title"><i class="fas fa-bullseye text-amber-400"></i> 전체 목표 달성률</div>
+          <div class="mt-3 flex items-end gap-1.5">
+            <strong id="total-count" class="goal-number">0</strong>
+            <span class="pb-1 text-[11px] font-black text-slate-500">개 완료</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div id="progress-percent" class="inline-flex px-2.5 py-1 rounded-full bg-amber-100 border border-amber-200 text-[11px] font-black text-amber-800">0%</div>
+          <div class="mt-2 text-[9px] font-bold text-slate-400">목표 <span id="target-count">100</span>개</div>
+        </div>
       </div>
 
-      <!-- 작업실 타일 목록 -->
-      <div id="group-workers" class="space-y-4">
-        <!-- JS로 생성 -->
-      </div>
-    </div>
+      <div class="progress-track mt-3"><div id="progress-fill" class="progress-fill" style="width:0%"></div></div>
 
-    <!-- Recent Messages Section (전체 과거 목록 스크롤 보기도 가능) -->
-    <div class="soft-card p-4 space-y-3">
-      <div class="flex justify-between items-center">
-        <h3 class="text-sm font-black text-slate-700 flex items-center gap-1.5">
-          <i class="fas fa-comment-dots text-sky-400"></i>
-          공장 소식 & 전체 한줄 메시지
-        </h3>
-        <span id="message-count-badge" class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-yellow-200">총 0개</span>
+      <div class="grid grid-cols-3 gap-2 mt-3">
+        <div class="metric-box"><div id="remaining-count" class="metric-value">100</div><div class="metric-label">남은 수량</div></div>
+        <div class="metric-box"><div id="active-worker-count" class="metric-value">0</div><div class="metric-label">참여 작업원</div></div>
+        <div class="metric-box"><div id="record-count" class="metric-value">0</div><div class="metric-label">생산 기록</div></div>
       </div>
-      
-      <!-- 최대 높이 지정 및 스크롤바 적용 -->
-      <div id="recent-messages" class="space-y-2 max-h-80 overflow-y-auto pr-1">
-        <div class="text-xs text-slate-400 text-center py-3 font-bold">메시지를 불러오는 중...</div>
-      </div>
-    </div>
+      <p class="mt-2.5 text-right text-[9px] font-bold text-slate-400">☁️ 구름 조 실적은 제봉 완료분으로 합산 반영</p>
+    </section>
 
+    <section class="app-card p-3">
+      <div class="flex items-center justify-between gap-2 mb-2">
+        <div class="section-title"><i class="fas fa-box-open text-sky-400"></i> 작품별 생산 현황</div>
+        <span class="text-[9px] font-extrabold text-slate-400">7 TYPES</span>
+      </div>
+      <div id="category-summary" class="category-bars"></div>
+      <div class="category-chart-note">막대 길이는 작품별 생산량의 상대 비교예요.</div>
+    </section>
+
+    <section class="app-card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <div class="section-title"><i class="fas fa-building text-amber-400"></i> 조별 작업실</div>
+        <span class="px-2 py-1 rounded-full bg-slate-100 text-[9px] font-black text-slate-500">7개 작업실</span>
+      </div>
+      <div id="group-workers"></div>
+    </section>
+
+    <section class="app-card p-4">
+      <div class="flex items-center justify-between gap-2 mb-3">
+        <div class="section-title"><i class="fas fa-comment-dots text-sky-400"></i> 공장 소식 & 한줄 메시지</div>
+        <span id="message-count-badge" class="px-2 py-1 rounded-full bg-amber-50 border border-amber-100 text-[9px] font-black text-amber-700">총 0개</span>
+      </div>
+      <div id="recent-messages" class="message-list">
+        <div class="skeleton py-5 text-center text-[10px] font-bold text-slate-400">생산기록을 불러오는 중...</div>
+      </div>
+    </section>
   </main>
 
-  <!-- Page 2: 생산물 등록 (Form) -->
-  <main id="page-form" class="space-y-4" style="display: none;">
-    <div class="soft-card p-4">
-      <h3 class="text-sm font-black text-slate-700 mb-4 flex items-center gap-1.5">
-        <i class="fas fa-pen-to-square text-amber-400"></i>
-        오늘의 생산량 등록하기
-      </h3>
-      <form id="scrub-form" class="space-y-3.5">
-        <div class="space-y-1">
-          <label class="text-xs font-bold text-slate-600">작업원 이름 (닉네임)</label>
-          <input type="text" id="name" placeholder="예: 김뜨개" required
-                 class="w-full p-2.5 bg-amber-50/60 border border-yellow-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-300 text-slate-800 text-xs font-bold">
+  <main id="page-form" class="space-y-3.5" style="display:none;">
+    <section class="app-card p-4">
+      <div class="section-title"><i class="fas fa-pen-to-square text-amber-400"></i> 오늘의 생산량 등록</div>
+      <p class="mt-1.5 text-[10px] font-bold text-slate-400">오늘 만든 수세미를 공장 실적에 추가해 주세요.</p>
+
+      <form id="scrub-form" class="mt-4 space-y-4">
+        <div>
+          <label class="field-label" for="name">작업원 이름 (닉네임)</label>
+          <input class="field" type="text" id="name" placeholder="예: 김뜨개" required autocomplete="off">
         </div>
-        <div class="space-y-1">
-          <label class="text-xs font-bold text-slate-600">오늘 뜬 작품</label>
-          <select id="item" class="w-full p-2.5 bg-amber-50/60 border border-yellow-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-300 text-xs font-bold text-slate-800">
-            <option value="🪨 조약돌">🪨 조약돌</option>
-            <option value="☁️ 구름">☁️ 구름</option>
-            <option value="🐤 오리">🐤 오리</option>
-            <option value="🍞 식빵">🍞 식빵</option>
-            <option value="🍳 계란후라이">🍳 계란후라이</option>
-            <option value="🪡 (번외)제봉">🪡 (번외)제봉</option>
-          </select>
+
+        <div>
+          <label class="field-label">오늘 뜬 작품</label>
+          <div id="item-picker" class="item-picker"></div>
+          <select id="item" class="hidden" aria-hidden="true" tabindex="-1"></select>
         </div>
-        <div class="space-y-1">
-          <label class="text-xs font-bold text-slate-600">완성한 개수</label>
-          <input type="number" id="count" min="1" value="1" required
-                 class="w-full p-2.5 bg-amber-50/60 border border-yellow-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-300 text-base font-black text-slate-800">
+
+        <div>
+          <label class="field-label" for="count">완성한 개수</label>
+          <input class="field text-base font-black" type="number" id="count" min="1" value="1" required inputmode="numeric">
         </div>
-        <div class="space-y-1">
-          <label class="text-xs font-bold text-slate-600">한줄 응원 / 소감 메시지 (선택)</label>
-          <input type="text" id="message" placeholder="예: 오늘 5개 폭풍 생산 완료! 🔥"
-                 class="w-full p-2.5 bg-amber-50/60 border border-yellow-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-300 text-slate-800 text-xs font-bold">
+
+        <div>
+          <label class="field-label" for="message">한줄 응원 / 소감 메시지 <span class="text-slate-300">(선택)</span></label>
+          <input class="field" type="text" id="message" placeholder="예: 오늘 5개 폭풍 생산 완료! 🔥" maxlength="100">
         </div>
-        <button type="submit" class="w-full p-3 soft-btn-yellow text-xs font-black flex items-center justify-center gap-1.5 mt-2">
-          <i class="fas fa-paper-plane"></i>
-          <span>공장에 보고하기</span>
-        </button>
+
+        <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i><span>공장에 보고하기</span></button>
       </form>
-    </div>
+    </section>
+
+    <section class="app-card p-3.5 flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-xl">🧶</div>
+      <div>
+        <div class="text-[10px] font-black text-slate-600">생산 기록은 바로 누적돼요</div>
+        <div class="mt-0.5 text-[9px] font-bold text-slate-400">등록 후 작업현황 탭에서 최신 실적을 확인할 수 있어요.</div>
+      </div>
+    </section>
   </main>
 
-  <!-- Bottom Navigation -->
-  <nav class="fixed bottom-3 left-0 right-0 max-w-md mx-auto px-4 z-50">
-    <div class="bg-white/90 backdrop-blur-md p-2 rounded-2xl border-2 border-yellow-300 shadow-lg flex justify-around">
-      <button onclick="switchTab('dash')" id="tab-dash-btn" class="flex-1 py-2.5 px-3 soft-btn-yellow text-xs font-black flex items-center justify-center gap-1.5">
-        <i class="fas fa-chart-line"></i>
-        <span>작업현황</span>
-      </button>
-      <div class="w-2"></div>
-      <button onclick="switchTab('form')" id="tab-form-btn" class="flex-1 py-2.5 px-3 soft-btn-sky text-xs font-black flex items-center justify-center gap-1.5">
-        <i class="fas fa-pen"></i>
-        <span>생산물 등록</span>
-      </button>
-    </div>
+  <nav class="nav-shell" aria-label="주요 메뉴">
+    <button onclick="switchTab('dash')" id="tab-dash-btn" class="nav-btn active"><i class="fas fa-chart-line"></i>작업현황</button>
+    <button onclick="switchTab('form')" id="tab-form-btn" class="nav-btn"><i class="fas fa-pen"></i>생산물 등록</button>
   </nav>
 
   <script>
-    // ⚠️ 구글 Apps Script URL
+    // ⚠️ 기존 Google Apps Script URL 유지
     const API_URL = "https://script.google.com/macros/s/AKfycbykRqeYjUxvdrR7y78bY_9Plcdf0USj-_BolR7on8Lc8U1bIXSFxTn9XbNOKY6s2EGk/exec";
     const TARGET_GOAL = 100;
 
+    // 품목은 이 배열만 수정하면 요약/작업실/등록/집계에 함께 반영됩니다.
     const CATEGORIES = [
-      { name: '🪨 조약돌', groupName: '조약돌 작업실' },
-      { name: '☁️ 구름', groupName: '구름 작업실' },
-      { name: '🐤 오리', groupName: '오리 작업실' },
-      { name: '🍞 식빵', groupName: '식빵 작업실' },
-      { name: '🍳 계란후라이', groupName: '계란후라이 작업실' },
-      { name: '🪡 (번외)제봉', groupName: '제봉 작업실', note: '☁️ 구름 쫑매는 중' }
+      { name: '🪨 조약돌', label: '조약돌', groupName: '조약돌 작업실', countsTowardGoal: true },
+      { name: '☁️ 구름', label: '구름', groupName: '구름 작업실', countsTowardGoal: false },
+      { name: '🐤 오리', label: '오리', groupName: '오리 작업실', countsTowardGoal: true },
+      { name: '🍞 식빵', label: '식빵', groupName: '식빵 작업실', countsTowardGoal: true },
+      { name: '🍳 계란후라이', label: '계란후라이', groupName: '계란후라이 작업실', countsTowardGoal: true },
+      { name: '🍋 레몬', label: '레몬', groupName: '레몬 작업실', countsTowardGoal: true },
+      { name: '🪡 (번외)제봉', label: '(번외)제봉', groupName: '제봉 작업실', note: '☁️ 구름 쫑매는 중', countsTowardGoal: true }
     ];
 
-    const ANIMAL_AVATARS = [
-      '🐱', '🐶', '🐰', '🐻', '🦊', 
-      '🐼', '🐨', '🐯', '🐥', '🦁', 
-      '🐮', '🐷', '🐸', '🐹', '🐵', 
-      '🐧', '🦦', '🦔', '🐿️', '🦙'
-    ];
-
+    const ANIMAL_AVATARS = ['🐱','🐶','🐰','🐻','🦊','🐼','🐨','🐯','🐥','🦁','🐮','🐷','🐸','🐹','🐵','🐧','🦦','🦔','🐿️','🦙'];
     const userAvatarMap = {};
     let avatarIndexCounter = 0;
 
@@ -338,11 +1008,28 @@
       return userAvatarMap[name];
     }
 
-    // 날짜 표기 통일 함수 (YYYY. M. D. 오후/오전 H:mm:ss)
+    function escapeHTML(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function getEmojiAndText(categoryName) {
+      const firstSpace = categoryName.indexOf(' ');
+      if (firstSpace === -1) return { emoji: categoryName, text: categoryName };
+      return {
+        emoji: categoryName.slice(0, firstSpace),
+        text: categoryName.slice(firstSpace + 1)
+      };
+    }
+
     function formatStandardDate(dateInput) {
       if (!dateInput) return '';
       let d = new Date(dateInput);
-      
+
       if (isNaN(d.getTime()) && typeof dateInput === 'string') {
         const parts = dateInput.split(' ');
         if (parts.length >= 2) {
@@ -350,47 +1037,66 @@
           d = new Date(`${currentYear}/${dateInput}`);
         }
       }
-      
-      if (isNaN(d.getTime())) return dateInput;
+      if (isNaN(d.getTime())) return String(dateInput);
 
       const year = d.getFullYear();
       const month = d.getMonth() + 1;
       const day = d.getDate();
       let hours = d.getHours();
       const minutes = String(d.getMinutes()).padStart(2, '0');
-      const seconds = String(d.getSeconds()).padStart(2, '0');
-      
       const ampm = hours >= 12 ? '오후' : '오전';
-      hours = hours % 12;
-      hours = hours ? hours : 12;
+      hours = hours % 12 || 12;
+      return `${year}. ${month}. ${day}. ${ampm} ${hours}:${minutes}`;
+    }
 
-      return `${year}. ${month}. ${day}. ${ampm} ${hours}:${minutes}:${seconds}`;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove('show'), 2400);
+    }
+
+    function initItemPicker() {
+      const select = document.getElementById('item');
+      const picker = document.getElementById('item-picker');
+
+      select.innerHTML = CATEGORIES.map(cat => `<option value="${escapeHTML(cat.name)}">${escapeHTML(cat.name)}</option>`).join('');
+      picker.innerHTML = CATEGORIES.map((cat, index) => {
+        const parts = getEmojiAndText(cat.name);
+        return `<button type="button" class="item-option ${index === 0 ? 'selected' : ''}" data-value="${escapeHTML(cat.name)}">
+          <span class="emoji">${escapeHTML(parts.emoji)}</span>${escapeHTML(parts.text)}
+        </button>`;
+      }).join('');
+
+      picker.querySelectorAll('.item-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          picker.querySelectorAll('.item-option').forEach(el => el.classList.remove('selected'));
+          btn.classList.add('selected');
+          select.value = btn.dataset.value;
+        });
+      });
     }
 
     async function loadData() {
       try {
         const res = await fetch(API_URL);
         const data = await res.json();
+        if (!Array.isArray(data)) throw new Error('응답 형식이 올바르지 않습니다.');
+
+        const catTotals = Object.fromEntries(CATEGORIES.map(cat => [cat.name, 0]));
+        const groupUserData = Object.fromEntries(CATEGORIES.map(cat => [cat.name, {}]));
+        const activeNames = new Set();
 
         data.forEach(row => {
-          if (row.name && row.name.trim()) {
-            getUserAvatar(row.name.trim());
-          }
-        });
-
-        const catTotals = {
-          '🪨 조약돌': 0, '☁️ 구름': 0, '🐤 오리': 0,
-          '🍞 식빵': 0, '🍳 계란후라이': 0, '🪡 (번외)제봉': 0
-        };
-        const groupUserData = {
-          '🪨 조약돌': {}, '☁️ 구름': {}, '🐤 오리': {},
-          '🍞 식빵': {}, '🍳 계란후라이': {}, '🪡 (번외)제봉': {}
-        };
-        
-        data.forEach(row => {
+          const name = row.name ? String(row.name).trim() : '무명 작업원';
+          const item = row.item ? String(row.item).trim() : '🪨 조약돌';
           const cnt = Number(row.count) || 0;
-          const item = row.item ? row.item.trim() : '🪨 조약돌';
-          const name = row.name ? row.name.trim() : '무명 작업원';
+
+          if (name) {
+            getUserAvatar(name);
+            activeNames.add(name);
+          }
 
           if (catTotals[item] !== undefined) {
             catTotals[item] += cnt;
@@ -398,97 +1104,84 @@
           }
         });
 
-        const effectiveTotal = catTotals['🪨 조약돌'] + 
-                               catTotals['🐤 오리'] + 
-                               catTotals['🍞 식빵'] + 
-                               catTotals['🍳 계란후라이'] + 
-                               catTotals['🪡 (번외)제봉'];
+        const effectiveTotal = CATEGORIES
+          .filter(cat => cat.countsTowardGoal)
+          .reduce((sum, cat) => sum + (catTotals[cat.name] || 0), 0);
 
-        // 1. 대시보드 진행률
-        document.getElementById('total-count').innerText = effectiveTotal;
         const percent = Math.min(Math.round((effectiveTotal / TARGET_GOAL) * 100), 100);
-        document.getElementById('progress-fill').style.width = percent + '%';
-        document.getElementById('progress-percent').innerText = `${percent}%`;
+        document.getElementById('total-count').textContent = effectiveTotal;
+        document.getElementById('progress-percent').textContent = `${percent}%`;
+        document.getElementById('progress-fill').style.width = `${percent}%`;
+        document.getElementById('target-count').textContent = TARGET_GOAL;
+        document.getElementById('remaining-count').textContent = Math.max(TARGET_GOAL - effectiveTotal, 0);
+        document.getElementById('active-worker-count').textContent = activeNames.size;
+        document.getElementById('record-count').textContent = data.length;
 
-        // 2. 카테고리별 요약 카드
-        const catSummaryEl = document.getElementById('category-summary');
-        catSummaryEl.innerHTML = CATEGORIES.map(cat => `
-          <div class="soft-card-cream p-2 text-center border border-yellow-200">
-            <div class="text-[11px] text-slate-600 font-bold mb-0.5">${cat.name}</div>
-            <div class="text-sm font-black text-amber-700">${catTotals[cat.name] || 0}개</div>
-          </div>
-        `).join('');
-
-        // 3. 조별 작업자 현황
-        const groupWorkersEl = document.getElementById('group-workers');
-        groupWorkersEl.innerHTML = CATEGORIES.map(cat => {
-          const workers = groupUserData[cat.name];
-          const workerEntries = Object.entries(workers);
-
-          return `
-            <div class="office-room p-3.5 space-y-2.5">
-              <!-- 작업실 룸 헤더 -->
-              <div class="flex justify-between items-center border-b border-amber-200/60 pb-2">
-                <div class="flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block"></span>
-                  <span class="font-black text-slate-800 text-xs">${cat.groupName}</span>
-                  ${cat.note ? `<span class="bg-sky-100 text-sky-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-sky-200">${cat.note}</span>` : ''}
-                </div>
-                <span class="text-[10px] px-2.5 py-0.5 bg-amber-200 text-amber-900 font-extrabold rounded-full">
-                  실적 ${catTotals[cat.name]}개
-                </span>
-              </div>
-              
-              <!-- 미니 오피스 데스크 그리드 영역 -->
-              <div class="flex flex-wrap gap-2.5 min-h-[55px] p-2 items-center">
-                ${
-                  workerEntries.length > 0 
-                  ? workerEntries.map(([userName, count], idx) => `
-                    <div class="desk-partition flex items-center gap-2">
-                      <div class="knitting-worker" style="animation-delay: ${idx * 0.15}s;">
-                        <!-- 아바타 -->
-                        <div class="relative flex items-center justify-center">
-                          <span class="pixel-animal">${getUserAvatar(userName)}</span>
-                          <span class="knitting-hands">🧶</span>
-                        </div>
-                      </div>
-                      <div class="flex flex-col pr-1 justify-center">
-                        <span class="text-[11px] font-black text-slate-800 mb-0.5">${userName}</span>
-                        <!-- 누적 생산량 배지 -->
-                        <span class="text-[9.5px] font-black text-amber-800 bg-amber-200 px-2 py-0.5 rounded-full border border-yellow-300 text-center">
-                          총 ${count}개
-                        </span>
-                      </div>
-                    </div>
-                  `).join('')
-                  : '<div class="w-full text-center py-2 text-[11px] text-slate-400 font-bold"><i class="fas fa-chair text-slate-300 mr-1"></i>아직 배치된 작업원이 없습니다</div>'
-                }
-              </div>
+        const maxCategoryTotal = Math.max(...CATEGORIES.map(cat => catTotals[cat.name] || 0), 1);
+        document.getElementById('category-summary').innerHTML = CATEGORIES.map(cat => {
+          const parts = getEmojiAndText(cat.name);
+          const total = catTotals[cat.name] || 0;
+          const barPercent = total === 0 ? 0 : Math.max((total / maxCategoryTotal) * 100, 4);
+          return `<div class="category-bar-row">
+            <div class="category-bar-label" title="${escapeHTML(parts.text)}">
+              <span class="emoji">${escapeHTML(parts.emoji)}</span>
+              <span class="category-bar-name">${escapeHTML(parts.text)}</span>
             </div>
-          `;
+            <div class="category-bar-track" aria-label="${escapeHTML(parts.text)} ${total}개">
+              <div class="category-bar-fill" style="width:${barPercent.toFixed(1)}%"></div>
+            </div>
+            <div class="category-bar-count">${total}개</div>
+          </div>`;
         }).join('');
 
-        // 4. 최근 한줄 메시지 목록 (슬라이스 제한 제거 -> 전체 역순 표시 및 스크롤바 부여)
-        const recentMessagesEl = document.getElementById('recent-messages');
+        document.getElementById('group-workers').innerHTML = CATEGORIES.map(cat => {
+          const workerEntries = Object.entries(groupUserData[cat.name] || {}).sort((a, b) => b[1] - a[1]);
+          const workersHtml = workerEntries.length
+            ? workerEntries.map(([userName, count], idx) => `<div class="worker-card">
+                <div class="worker-avatar" style="animation-delay:${idx * 0.08}s">${getUserAvatar(userName)}<span class="worker-yarn">🧶</span></div>
+                <div class="worker-info">
+                  <div class="worker-name" title="${escapeHTML(userName)}">${escapeHTML(userName)}</div>
+                  <div class="worker-count">총 ${count}개</div>
+                </div>
+              </div>`).join('')
+            : `<div class="col-span-2 py-3 text-center text-[10px] font-bold text-slate-400"><i class="fas fa-chair mr-1 text-slate-300"></i>아직 배치된 작업원이 없습니다</div>`;
+
+          return `<div class="office-room">
+            <div class="room-top">
+              <div>
+                <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400"></span><span class="room-name">${escapeHTML(cat.groupName)}</span></div>
+                ${cat.note ? `<span class="room-note">${escapeHTML(cat.note)}</span>` : ''}
+              </div>
+              <span class="room-total">실적 ${catTotals[cat.name]}개</span>
+            </div>
+            <div class="worker-grid">${workersHtml}</div>
+          </div>`;
+        }).join('');
+
         const allReverseData = [...data].reverse();
-        
-        // 메시지 개수 뱃지 갱신
-        document.getElementById('message-count-badge').innerText = `총 ${allReverseData.length}개`;
-        
-        recentMessagesEl.innerHTML = allReverseData.map(row => `
-          <div class="p-2.5 bg-amber-50/50 rounded-xl border border-yellow-200 text-xs space-y-0.5">
-            <div class="flex justify-between items-center font-bold text-slate-700">
-              <span>${row.name || '무명 작업원'} <span class="font-normal text-slate-400">(${row.item || '작품'} +${row.count || 1}개)</span></span>
-              ${row.date ? `<span class="text-[9.5px] font-bold text-slate-500 bg-white px-1.5 py-0.5 rounded-md border border-yellow-200">${formatStandardDate(row.date)}</span>` : ''}
-            </div>
-            <div class="text-slate-600 font-medium pt-0.5">
-              "${row.message && row.message.trim() !== '' ? row.message : '오늘도 열심히 열뜨했어요! 🧶'}"
-            </div>
-          </div>
-        `).join('') || '<div class="text-xs text-slate-400 text-center py-2 font-bold">등록된 메시지가 없습니다.</div>';
+        document.getElementById('message-count-badge').textContent = `총 ${allReverseData.length}개`;
+        document.getElementById('recent-messages').innerHTML = allReverseData.length
+          ? allReverseData.map(row => {
+              const name = row.name || '무명 작업원';
+              const item = row.item || '작품';
+              const count = row.count || 1;
+              const message = row.message && String(row.message).trim() ? row.message : '오늘도 열심히 열뜨했어요! 🧶';
+              return `<div class="message-card">
+                <div class="message-head">
+                  <div class="min-w-0">
+                    <div class="message-person">${escapeHTML(name)}</div>
+                    <div class="message-production">${escapeHTML(item)} · +${escapeHTML(count)}개</div>
+                  </div>
+                  ${row.date ? `<div class="message-time">${escapeHTML(formatStandardDate(row.date))}</div>` : ''}
+                </div>
+                <div class="message-body">“${escapeHTML(message)}”</div>
+              </div>`;
+            }).join('')
+          : '<div class="py-5 text-center text-[10px] font-bold text-slate-400">등록된 메시지가 없습니다.</div>';
 
       } catch (err) {
         console.error(err);
+        document.getElementById('recent-messages').innerHTML = '<div class="py-5 text-center text-[10px] font-bold text-rose-400">데이터를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.</div>';
       }
     }
 
@@ -498,26 +1191,22 @@
       const dashBtn = document.getElementById('tab-dash-btn');
       const formBtn = document.getElementById('tab-form-btn');
 
-      if (tab === 'dash') {
-        dashPage.style.display = 'block';
-        formPage.style.display = 'none';
-        dashBtn.className = 'flex-1 py-2.5 px-3 soft-btn-yellow text-xs font-black flex items-center justify-center gap-1.5';
-        formBtn.className = 'flex-1 py-2.5 px-3 soft-btn-sky text-xs font-black flex items-center justify-center gap-1.5';
-        loadData();
-      } else {
-        dashPage.style.display = 'none';
-        formPage.style.display = 'block';
-        formBtn.className = 'flex-1 py-2.5 px-3 soft-btn-yellow text-xs font-black flex items-center justify-center gap-1.5';
-        dashBtn.className = 'flex-1 py-2.5 px-3 soft-btn-sky text-xs font-black flex items-center justify-center gap-1.5';
-      }
+      const isDash = tab === 'dash';
+      dashPage.style.display = isDash ? 'block' : 'none';
+      formPage.style.display = isDash ? 'none' : 'block';
+      dashBtn.classList.toggle('active', isDash);
+      formBtn.classList.toggle('active', !isDash);
+
+      if (isDash) loadData();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     document.getElementById('scrub-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const submitBtn = e.target.querySelector('button');
-      submitBtn.innerText = "공장에 보고 중...";
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>공장에 보고 중...</span>';
       submitBtn.disabled = true;
-      submitBtn.classList.add('opacity-50');
+      submitBtn.style.opacity = '.6';
 
       const payload = {
         name: document.getElementById('name').value,
@@ -533,20 +1222,23 @@
           headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify(payload)
         });
-        
-        alert('🎉 두코두코 공장에 수세미 실적이 성공적으로 보고되었습니다!');
-        document.getElementById('scrub-form').reset();
+
+        e.target.reset();
+        document.querySelectorAll('.item-option').forEach((el, i) => el.classList.toggle('selected', i === 0));
+        document.getElementById('item').value = CATEGORIES[0].name;
+        showToast('🎉 생산 실적이 공장에 등록됐어요!');
         switchTab('dash');
       } catch (err) {
-        alert('오류가 발생했습니다. 다시 시도해주세요.');
+        console.error(err);
+        showToast('등록 중 오류가 발생했어요. 다시 시도해 주세요.');
       } finally {
         submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i><span>공장에 보고하기</span>';
         submitBtn.disabled = false;
-        submitBtn.classList.remove('opacity-50');
+        submitBtn.style.opacity = '1';
       }
     });
 
-    // 데이터 로드
+    initItemPicker();
     loadData();
   </script>
 </body>
